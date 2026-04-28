@@ -101,33 +101,35 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
     if ('requestIdleCallback' in window) requestIdleCallback(setupObservers);
-    else setTimeout(setupObservers, 1000););
+    else setTimeout(setupObservers, 1000);
 
-    // 4. Custom Cursor (Desktop Only)
-    if (window.innerWidth > 992) {
-        const cursor = document.createElement('div');
-        cursor.classList.add('custom-cursor');
-        document.body.appendChild(cursor);
-        const cursorFollower = document.createElement('div');
-        cursorFollower.classList.add('cursor-follower');
-        document.body.appendChild(cursorFollower);
-        let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0, followerX = 0, followerY = 0;
-        document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
-        const loop = () => {
-            cursorX += (mouseX - cursorX) * 0.4;
-            cursorY += (mouseY - cursorY) * 0.4;
-            followerX += (mouseX - followerX) * 0.15;
-            followerY += (mouseY - followerY) * 0.15;
-            cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
-            cursorFollower.style.transform = `translate3d(${followerX}px, ${followerY}px, 0)`;
-            requestAnimationFrame(loop);
-        };
-        loop();
-        document.querySelectorAll('a, button, .hover-target').forEach(el => {
-            el.addEventListener('mouseenter', () => { cursor.classList.add('hovering'); cursorFollower.classList.add('hovering'); });
-            el.addEventListener('mouseleave', () => { cursor.classList.remove('hovering'); cursorFollower.classList.remove('hovering'); });
-        });
-    }
+    // 4. Custom Cursor (Desktop Only) - Deferred to non-critical
+    const setupCursor = () => {
+        if (window.innerWidth > 992) {
+            const cursor = document.createElement('div');
+            cursor.classList.add('custom-cursor');
+            document.body.appendChild(cursor);
+            const cursorFollower = document.createElement('div');
+            cursorFollower.classList.add('cursor-follower');
+            document.body.appendChild(cursorFollower);
+            let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0, followerX = 0, followerY = 0;
+            document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+            const loop = () => {
+                cursorX += (mouseX - cursorX) * 0.4;
+                cursorY += (mouseY - cursorY) * 0.4;
+                followerX += (mouseX - followerX) * 0.15;
+                followerY += (mouseY - followerY) * 0.15;
+                cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
+                cursorFollower.style.transform = `translate3d(${followerX}px, ${followerY}px, 0)`;
+                requestAnimationFrame(loop);
+            };
+            loop();
+            document.querySelectorAll('a, button, .hover-target').forEach(el => {
+                el.addEventListener('mouseenter', () => { cursor.classList.add('hovering'); cursorFollower.classList.add('hovering'); });
+                el.addEventListener('mouseleave', () => { cursor.classList.remove('hovering'); cursorFollower.classList.remove('hovering'); });
+            });
+        }
+    };
 
     // 5. Mobile Menu (Fixed and Accessible)
     const menuToggle = document.querySelector('.menu-toggle');
@@ -161,6 +163,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // This eliminates TBT (Total Blocking Time)
     // =====================================================
     const runNonCritical = () => {
+        setupCursor();
+        setupObservers();
 
     // 7. Scratch reveal for results section
     const scratchStats = document.querySelectorAll('.scratch-stat');
