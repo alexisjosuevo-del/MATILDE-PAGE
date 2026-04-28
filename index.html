@@ -20,7 +20,7 @@
         @font-face{font-family:'Outfit';src:url('fonts/outfit-700.ttf') format('truetype');font-weight:700;font-display:swap}
         *{margin:0;padding:0;box-sizing:border-box}
         body{font-family:'Outfit','Inter',system-ui,-apple-system,sans-serif;background:#f5f5f7;color:#1a1a2e;overflow-x:hidden}
-        .navbar{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:1rem 0;transition:all .4s;min-height:180px;background:rgba(245,245,247,.95);backdrop-filter:blur(10px)}
+        .navbar{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:1rem 0;transition:all .4s;min-height:220px;background:transparent}
         .container{max-width:1400px;margin:0 auto;padding:0 5%}
         .nav-container{display:flex;align-items:center;justify-content:space-between}
         .brand-logo-container{display:block;min-height:70px;min-width:200px}
@@ -39,7 +39,7 @@
             .nav-links{display:none}
             .menu-toggle{display:block}
             .brand-logo-container img{height:180px;width:auto}
-            .navbar{min-height:200px}
+            .navbar{min-height:220px}
             .bg-blobs{display:none}
         }
         @media(min-width:769px){.hero-mobile-poster{display:none}.menu-toggle{display:none}}
@@ -47,7 +47,7 @@
     </style>
 
     <!-- CSS Completo (non-render-blocking) -->
-    <link rel="stylesheet" href="styles.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="styles.css" media="print" onload="this.media='all';document.body.classList.add('css-ready')">
     <noscript><link rel="stylesheet" href="styles.css"></noscript>
     <!-- Favicon -->
     <link rel="icon" type="image/webp" href="logo.webp">

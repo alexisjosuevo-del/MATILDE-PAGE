@@ -49,9 +49,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!scrollTicking) {
             window.requestAnimationFrame(() => {
                 const scrollY = window.scrollY;
-                if (scrollY > 100) {
+                if (scrollY > 50) {
+                    navbar.style.background = 'rgba(245, 245, 247, 0.95)';
+                    navbar.style.backdropFilter = 'blur(10px)';
                     navbar.classList.add('scrolled');
                 } else {
+                    navbar.style.background = 'transparent';
+                    navbar.style.backdropFilter = 'none';
                     navbar.classList.remove('scrolled');
                 }
                 // Blob parallax removed — CSS animation handles it, no JS style mutation needed
@@ -131,23 +135,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // 5. Mobile Menu (Fixed and Accessible)
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
-    if (menuToggle && navLinks) {
-        menuToggle.addEventListener('click', () => {
-            const isActive = navLinks.classList.toggle('active');
-            menuToggle.classList.toggle('active');
-            menuToggle.setAttribute('aria-expanded', isActive);
-        });
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-                menuToggle.classList.remove('active');
-                menuToggle.setAttribute('aria-expanded', 'false');
+    // 5. Mobile Menu - Defer
+    const setupMobileMenu = () => {
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        if (menuToggle && navLinks) {
+            menuToggle.addEventListener('click', () => {
+                const isActive = navLinks.classList.toggle('active');
+                menuToggle.classList.toggle('active');
+                menuToggle.setAttribute('aria-expanded', isActive);
             });
-        });
-    }
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                });
+            });
+        }
+    };
 
     // 6. Capability List Hover Effect
     const capabilities = document.querySelectorAll('.cap-item');
@@ -163,6 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // This eliminates TBT (Total Blocking Time)
     // =====================================================
     const runNonCritical = () => {
+        setupMobileMenu();
         setupCursor();
         setupObservers();
 
