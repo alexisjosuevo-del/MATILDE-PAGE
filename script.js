@@ -65,41 +65,43 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             scrollTicking = true;
         }
-    }, { passive: true });
-
-    // 3. Intersection Observer (Reveal Text & Elements)
-    const revealOptions = { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.1 };
-    const revealObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('revealed');
-                observer.unobserve(entry.target);
-            }
+    }, { passive: true });    // 3. Intersection Observer (Reveal Text & Elements) - Deferred
+    const setupObservers = () => {
+        const revealOptions = { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.1 };
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, revealOptions);
+        document.querySelectorAll('.reveal-up, .reveal-fade, .reveal-stagger > *').forEach(el => {
+            revealObserver.observe(el);
         });
-    }, revealOptions);
-    document.querySelectorAll('.reveal-up, .reveal-fade, .reveal-stagger > *').forEach(el => {
-        revealObserver.observe(el);
-    });
 
-    // 3b. Lazy Video Loading (saves ~5.4MB initial bandwidth)
-    const lazyVideoObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const video = entry.target;
-                const sources = video.querySelectorAll('source[data-src]');
-                sources.forEach(source => {
-                    source.src = source.dataset.src;
-                    source.removeAttribute('data-src');
-                });
-                video.load();
-                video.play().catch(() => {});
-                observer.unobserve(video);
-            }
+        // 3b. Lazy Video Loading (saves ~5.4MB initial bandwidth)
+        const lazyVideoObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const video = entry.target;
+                    const sources = video.querySelectorAll('source[data-src]');
+                    sources.forEach(source => {
+                        source.src = source.dataset.src;
+                        source.removeAttribute('data-src');
+                    });
+                    video.load();
+                    video.play().catch(() => {});
+                    observer.unobserve(video);
+                }
+            });
+        }, { rootMargin: '200px 0px', threshold: 0.01 });
+        document.querySelectorAll('[data-lazy-video]').forEach(video => {
+            lazyVideoObserver.observe(video);
         });
-    }, { rootMargin: '200px 0px', threshold: 0.01 });
-    document.querySelectorAll('[data-lazy-video]').forEach(video => {
-        lazyVideoObserver.observe(video);
-    });
+    };
+    if ('requestIdleCallback' in window) requestIdleCallback(setupObservers);
+    else setTimeout(setupObservers, 1000););
 
     // 4. Custom Cursor (Desktop Only)
     if (window.innerWidth > 992) {
@@ -366,37 +368,42 @@ Servicios: Paquete Basic $39k MXN, Pro $79k, Elite $169k. Pregunta perfil del us
         });
 
         const observer = new IntersectionObserver((entries) => {
+            const wasVisible = isVisible;
             isVisible = entries[0].isIntersecting;
+            if (isVisible && !wasVisible) animateTeam();
         }, { threshold: 0.1 });
         observer.observe(teamScene);
 
+        let containerW = teamScene.clientWidth;
+        let containerH = teamScene.clientHeight;
+        
+        window.addEventListener('resize', () => {
+            containerW = teamScene.clientWidth;
+            containerH = teamScene.clientHeight;
+            positionMembers();
+        }, { passive: true });
+
         function positionMembers() {
-            const containerW = teamScene.clientWidth;
-            const containerH = teamScene.clientHeight;
             const cx = containerW / 2, cy = containerH / 2;
             const itemSize = Math.min(160, Math.max(80, containerW * 0.20));
             const radius = containerW * 0.38 - itemSize / 2;
             members.forEach((m, i) => {
-                m.style.width = `${itemSize}px`;
-                m.style.height = `${itemSize}px`;
-                m.style.left = '0';
-                m.style.top = '0';
                 const a = angle + (i * (Math.PI * 2 / members.length));
                 const x = cx + Math.cos(a - Math.PI / 2) * radius - itemSize / 2;
                 const y = cy + Math.sin(a - Math.PI / 2) * radius - itemSize / 2;
-                m.style.transform = `translate3d(${Math.round(x)}px, ${Math.round(y)}px, 0)`;
+                m.style.cssText = `width:${itemSize}px;height:${itemSize}px;left:0;top:0;transform:translate3d(${Math.round(x)}px, ${Math.round(y)}px, 0)`;
             });
         }
         
         function animateTeam() { 
-            if (!paused && isVisible) { 
+            if (!isVisible) return;
+            if (!paused) { 
                 angle += speed; 
                 positionMembers(); 
             }
             requestAnimationFrame(animateTeam); 
         }
         positionMembers();
-        animateTeam();
     }
 
     }; // END runNonCritical
@@ -417,6 +424,7 @@ Servicios: Paquete Basic $39k MXN, Pro $79k, Elite $169k. Pregunta perfil del us
         }, { threshold: 0.01 });
         processObs.observe(processHorizontal);
 
+        const bgNums = Array.from(processTrack.querySelectorAll('.p-bg-num'));
         const handleProcessScroll = () => {
             if (!processIsVisible) return;
             const containerRect = processHorizontal.getBoundingClientRect();
@@ -429,7 +437,6 @@ Servicios: Paquete Basic $39k MXN, Pro $79k, Elite $169k. Pregunta perfil del us
             const windowWidth = window.innerWidth;
             const maxTranslate = trackWidth - windowWidth + (windowWidth * 0.1);
             processTrack.style.transform = `translate3d(${-progress * maxTranslate}px, 0, 0)`;
-            const bgNums = processTrack.querySelectorAll('.p-bg-num');
             bgNums.forEach((num, index) => { num.style.transform = `translate3d(${progress * 150 * (0.1 + index * 0.05)}px, 0, 0)`; });
             if (progressBar) progressBar.style.width = `${progress * 80}vw`;
         };

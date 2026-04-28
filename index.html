@@ -8,11 +8,11 @@
     <meta name="description" content="Estrategia de marketing e innovación en salud corporativa. Ayudamos a marcas, clínicas y farmacéuticas a crecer con tecnología y creatividad.">
     <link rel="canonical" href="https://matilde.agency/">
 
-    <!-- Preconexiones -->
-    <link rel="preconnect" href="https://api.groq.com" crossorigin>
-
     <!-- Preload Recurso LCP Crítico -->
     <link rel="preload" href="logo-matilde.webp" as="image" fetchpriority="high">
+
+    <!-- Preconexiones -->
+    <link rel="preconnect" href="https://api.groq.com" crossorigin>
 
     <!-- CSS Crítico Inline (Above-the-fold — FCP instantáneo) -->
     <style>
@@ -42,8 +42,7 @@
             .bg-blobs{display:none}
         }
         @media(min-width:769px){.hero-mobile-poster{display:none}.menu-toggle{display:none}}
-        .reveal-up{opacity:0;transform:translateY(40px);transition:opacity .8s,transform .8s}
-        .reveal-up.revealed{opacity:1;transform:translateY(0)}
+        .reveal-up{opacity:0;transform:translateY(20px)}
     </style>
 
     <!-- CSS Completo (non-render-blocking) -->
@@ -63,7 +62,7 @@
     <nav class="navbar">
         <div class="container nav-container">
             <a href="#inicio" class="brand-logo-container" aria-label="Volver al inicio">
-                <img src="logo-matilde.webp" alt="Matilde Logo" width="320" height="180">
+                <img src="logo-matilde.webp" alt="Matilde Logo" width="320" height="180" fetchpriority="high" decoding="async">
             </a>
             <ul class="nav-links">
                 <li><a href="#somos">Nosotros</a></li>
