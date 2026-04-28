@@ -163,9 +163,122 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // =====================================================
-    // NON-CRITICAL JS - Deferred to browser idle time
-    // This eliminates TBT (Total Blocking Time)
+    // 8. AI Modal Logic (Restored Immediate Listener)
     // =====================================================
+    const btnIniciarConversacion = document.getElementById('btnIniciarConversacion');
+    const aiModalOverlay = document.getElementById('aiModalOverlay');
+    const aiModalClose = document.getElementById('aiModalClose');
+    const aiInitialMessage = document.getElementById('aiInitialMessage');
+    const aiChatText = document.getElementById('aiChatText');
+    const aiTypingIndicator = document.getElementById('aiTypingIndicator');
+    const aiCharacterVideo = document.getElementById('aiCharacterVideo');
+    const aiChatHistory = document.getElementById('aiChatHistory');
+    const aiUserInput = document.getElementById('aiUserInput');
+    const aiSendBtn = document.getElementById('aiSendBtn');
+
+    const GROQ_API_KEY = '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';
+    const matildeRules = `Eres Matilde Montoya, la experta IA de la agencia Matilde Agency.
+Reglas: SOLO hablas de servicios de la agencia. Responde corto (1-2 parrafos).
+Servicios: Paquete Basic $39k MXN, Pro $79k, Elite $169k. Pregunta perfil del usuario (Medico, Clinica, Farmaceutica, Startup).`;
+
+    let chatSessionHistory = [{ role: "system", content: matildeRules }];
+
+    if (btnIniciarConversacion && aiModalOverlay) {
+        btnIniciarConversacion.addEventListener('click', (e) => {
+            e.preventDefault();
+            aiModalOverlay.classList.add('active');
+            if (aiCharacterVideo) {
+                aiCharacterVideo.load();
+                const vp = aiCharacterVideo.play();
+                if (vp !== undefined) {
+                    vp.catch(() => {
+                        document.addEventListener('touchstart', () => {
+                            aiCharacterVideo.play().catch(() => {});
+                        }, { once: true, passive: true });
+                    });
+                }
+            }
+            if (aiChatHistory && aiChatHistory.children.length === 1) {
+                aiInitialMessage.style.display = 'flex';
+                aiChatText.textContent = '';
+                aiChatText.style.display = 'none';
+                aiTypingIndicator.style.display = 'flex';
+                setTimeout(() => {
+                    aiTypingIndicator.style.display = 'none';
+                    aiChatText.style.display = 'block';
+                    const message = "Hola soy Matilde Montoya, en que te puedo ayudar?";
+                    let i = 0;
+                    function typeWriter() {
+                        if (i < message.length) { aiChatText.textContent += message.charAt(i); i++; setTimeout(typeWriter, 35); }
+                        else { aiUserInput.disabled = false; aiSendBtn.disabled = false; aiUserInput.focus(); }
+                    }
+                    typeWriter();
+                }, 1200);
+            }
+        });
+    }
+
+    async function handleSendMessage() {
+        const text = aiUserInput.value.trim();
+        if (!text) return;
+        aiUserInput.value = '';
+        aiUserInput.disabled = true;
+        aiSendBtn.disabled = true;
+        appendMessage('user', text);
+        chatSessionHistory.push({ role: "user", content: text });
+        const typingBubble = appendTypingIndicator();
+        try {
+            const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_API_KEY}` },
+                body: JSON.stringify({ model: 'llama-3.1-8b-instant', messages: chatSessionHistory })
+            });
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.error?.message || 'Error API');
+            const aiResponseText = data.choices[0].message.content;
+            typingBubble.remove();
+            appendMessage('assistant', aiResponseText);
+            chatSessionHistory.push({ role: "assistant", content: aiResponseText });
+        } catch (error) {
+            typingBubble.remove();
+            appendMessage('model', 'Oops, error: ' + error.message);
+        } finally {
+            aiUserInput.disabled = false;
+            aiSendBtn.disabled = false;
+            aiUserInput.focus();
+        }
+    }
+
+    function appendMessage(role, text) {
+        if (!aiChatHistory) return;
+        const wrapper = document.createElement('div');
+        wrapper.className = `ai-chat-message ${role === 'user' ? 'user-message' : 'ai-message'}`;
+        const bubble = document.createElement('div');
+        bubble.className = 'ai-chat-bubble';
+        const p = document.createElement('p');
+        p.innerHTML = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        bubble.appendChild(p);
+        wrapper.appendChild(bubble);
+        aiChatHistory.appendChild(wrapper);
+        aiChatHistory.scrollTop = aiChatHistory.scrollHeight;
+    }
+
+    function appendTypingIndicator() {
+        if (!aiChatHistory) return;
+        const wrapper = document.createElement('div');
+        wrapper.className = 'ai-chat-message ai-message';
+        wrapper.innerHTML = '<div class="ai-chat-bubble"><div class="ai-typing-indicator" style="display:flex"><span></span><span></span><span></span></div></div>';
+        aiChatHistory.appendChild(wrapper);
+        aiChatHistory.scrollTop = aiChatHistory.scrollHeight;
+        return wrapper;
+    }
+
+    if (aiSendBtn) aiSendBtn.addEventListener('click', handleSendMessage);
+    if (aiUserInput) aiUserInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleSendMessage(); });
+    if (aiModalClose) aiModalClose.addEventListener('click', () => { aiModalOverlay.classList.remove('active'); });
+    if (aiModalOverlay) aiModalOverlay.addEventListener('click', (e) => { if (e.target === aiModalOverlay) aiModalOverlay.classList.remove('active'); });
+
+    // NON-CRITICAL JS - Deferred to browser idle time
     const runNonCritical = () => {
         setupCursor();
         setupObservers();
@@ -246,123 +359,6 @@ document.addEventListener('DOMContentLoaded', () => {
         scratchStats.forEach(stat => { stat.dataset.scratching = '0'; setupScratchCanvas(stat); });
     });
 
-    // 8. AI Modal Logic
-    const btnIniciarConversacion = document.getElementById('btnIniciarConversacion');
-    const aiModalOverlay = document.getElementById('aiModalOverlay');
-    const aiModalClose = document.getElementById('aiModalClose');
-    const aiInitialMessage = document.getElementById('aiInitialMessage');
-    const aiChatText = document.getElementById('aiChatText');
-    const aiTypingIndicator = document.getElementById('aiTypingIndicator');
-    const aiCharacterVideo = document.getElementById('aiCharacterVideo');
-    const aiChatHistory = document.getElementById('aiChatHistory');
-    const aiUserInput = document.getElementById('aiUserInput');
-    const aiSendBtn = document.getElementById('aiSendBtn');
-
-    const GROQ_API_KEY = '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';
-    const matildeRules = `Eres Matilde Montoya, la experta IA de la agencia Matilde Agency.
-Reglas: SOLO hablas de servicios de la agencia. Responde corto (1-2 parrafos).
-Servicios: Paquete Basic $39k MXN, Pro $79k, Elite $169k. Pregunta perfil del usuario (Medico, Clinica, Farmaceutica, Startup).`;
-
-    let chatSessionHistory = [{ role: "system", content: matildeRules }];
-
-    // Video stays as video - no longer overwrite src with images
-    // The chatbot video (Video_Cómico_de_Matilde.mp4) plays continuously in the modal
-
-    if (btnIniciarConversacion && aiModalOverlay) {
-        btnIniciarConversacion.addEventListener('click', (e) => {
-            e.preventDefault();
-            aiModalOverlay.classList.add('active');
-            // Load and play chatbot video on demand (saves 2MB initial bandwidth)
-            if (aiCharacterVideo) {
-                aiCharacterVideo.load();
-                const vp = aiCharacterVideo.play();
-                if (vp !== undefined) {
-                    vp.catch(() => {
-                        // Mobile: wait for touch to play video
-                        document.addEventListener('touchstart', () => {
-                            aiCharacterVideo.play().catch(() => {});
-                        }, { once: true, passive: true });
-                    });
-                }
-            }
-            if (aiChatHistory && aiChatHistory.children.length === 1) {
-                aiInitialMessage.style.display = 'flex';
-                aiChatText.textContent = '';
-                aiChatText.style.display = 'none';
-                aiTypingIndicator.style.display = 'flex';
-                setTimeout(() => {
-                    aiTypingIndicator.style.display = 'none';
-                    aiChatText.style.display = 'block';
-                    const message = "Hola soy Matilde Montoya, en que te puedo ayudar?";
-                    let i = 0;
-                    function typeWriter() {
-                        if (i < message.length) { aiChatText.textContent += message.charAt(i); i++; setTimeout(typeWriter, 35); }
-                        else { aiUserInput.disabled = false; aiSendBtn.disabled = false; aiUserInput.focus(); }
-                    }
-                    typeWriter();
-                }, 1200);
-            }
-        });
-    }
-
-    async function handleSendMessage() {
-        const text = aiUserInput.value.trim();
-        if (!text) return;
-        aiUserInput.value = '';
-        aiUserInput.disabled = true;
-        aiSendBtn.disabled = true;
-        appendMessage('user', text);
-        chatSessionHistory.push({ role: "user", content: text });
-        const typingBubble = appendTypingIndicator();
-        try {
-            const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_API_KEY}` },
-                body: JSON.stringify({ model: 'llama-3.1-8b-instant', messages: chatSessionHistory })
-            });
-            const data = await response.json();
-            if (!response.ok) throw new Error(data.error?.message || 'Error API');
-            const aiResponseText = data.choices[0].message.content;
-            typingBubble.remove();
-            appendMessage('assistant', aiResponseText);
-            chatSessionHistory.push({ role: "assistant", content: aiResponseText });
-        } catch (error) {
-            typingBubble.remove();
-            appendMessage('model', 'Oops, error: ' + error.message);
-        } finally {
-            aiUserInput.disabled = false;
-            aiSendBtn.disabled = false;
-            aiUserInput.focus();
-        }
-    }
-
-    function appendMessage(role, text) {
-        const wrapper = document.createElement('div');
-        wrapper.className = `ai-chat-message ${role === 'user' ? 'user-message' : 'ai-message'}`;
-        const bubble = document.createElement('div');
-        bubble.className = 'ai-chat-bubble';
-        const p = document.createElement('p');
-        p.innerHTML = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-        bubble.appendChild(p);
-        wrapper.appendChild(bubble);
-        aiChatHistory.appendChild(wrapper);
-        aiChatHistory.scrollTop = aiChatHistory.scrollHeight;
-    }
-
-    function appendTypingIndicator() {
-        const wrapper = document.createElement('div');
-        wrapper.className = 'ai-chat-message ai-message';
-        wrapper.innerHTML = '<div class="ai-chat-bubble"><div class="ai-typing-indicator" style="display:flex"><span></span><span></span><span></span></div></div>';
-        aiChatHistory.appendChild(wrapper);
-        aiChatHistory.scrollTop = aiChatHistory.scrollHeight;
-        return wrapper;
-    }
-
-    if (aiSendBtn) aiSendBtn.addEventListener('click', handleSendMessage);
-    if (aiUserInput) aiUserInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleSendMessage(); });
-    if (aiModalClose) aiModalClose.addEventListener('click', () => { aiModalOverlay.classList.remove('active'); });
-    if (aiModalOverlay) aiModalOverlay.addEventListener('click', (e) => { if (e.target === aiModalOverlay) aiModalOverlay.classList.remove('active'); });
-
     // 9. Team Rotation Logic (Optimized: only runs when visible)
     const teamScene = document.getElementById("teamScene");
     if (teamScene) {
@@ -416,9 +412,9 @@ Servicios: Paquete Basic $39k MXN, Pro $79k, Elite $169k. Pregunta perfil del us
 
     }; // END runNonCritical
     if ('requestIdleCallback' in window) {
-        requestIdleCallback(runNonCritical, { timeout: 3000 });
+        requestIdleCallback(runNonCritical, { timeout: 5000 });
     } else {
-        setTimeout(runNonCritical, 800);
+        setTimeout(runNonCritical, 2000);
     }
 
     // 10. Horizontal Scroll Process Section (Optimized: only runs when visible)

@@ -21,9 +21,10 @@
         @font-face{font-family:'Outfit';src:url('fonts/outfit-700.ttf') format('truetype');font-weight:700;font-display:swap}
         *{margin:0;padding:0;box-sizing:border-box}
         body{font-family:'Outfit','Inter',system-ui,-apple-system,sans-serif;background:#f5f5f7;color:#1a1a2e;overflow-x:hidden}
-        .navbar{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:10px 0;height:260px;background:transparent;display:flex;align-items:center}
-        .hero-content h1{min-height:360px;margin-top:260px;line-height:1.05}
-        #aiModalOverlay{display:none}
+        .navbar{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:10px 0;height:400px;background:transparent;display:flex;align-items:center;backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px)}
+        .hero-content h1{min-height:360px;margin-top:400px;line-height:1.05}
+        #aiModalOverlay{display:none;align-items:center;justify-content:center}
+        #aiModalOverlay.active{display:flex}
         .container{max-width:1400px;margin:0 auto;padding:0 5%}
         .nav-container{display:flex;align-items:center;justify-content:space-between}
         .brand-logo-container{display:block;min-height:70px;min-width:200px}
@@ -41,10 +42,10 @@
             .hero-video{display:block}
             .nav-links{display:none}
             .menu-toggle{display:block}
-            .brand-logo-container img{height:220px;width:auto;display:block}
-            .navbar{height:260px;padding:20px 0}
+            .brand-logo-container img{height:350px;width:auto;display:block}
+            .navbar{height:400px;padding:20px 0}
             .menu-toggle{display:flex;z-index:1001;color:#1a1a2e;margin-top:0}
-            .hero-content h1{margin-top:260px;min-height:360px}
+            .hero-content h1{margin-top:400px;min-height:480px}
         }
         @media(min-width:769px){.hero-mobile-poster{display:none}.menu-toggle{display:none}}
         .reveal-up{opacity:0;transform:translateY(20px)}
@@ -67,7 +68,7 @@
     <nav class="navbar">
         <div class="container nav-container">
             <a href="#inicio" class="brand-logo-container" aria-label="Volver al inicio">
-                <img src="logo-matilde.webp" alt="Matilde Logo" width="310" height="220" fetchpriority="high" decoding="sync">
+                <img src="logo-matilde.webp" alt="Matilde Logo" width="500" height="350" fetchpriority="high" decoding="sync">
             </a>
             <ul class="nav-links">
                 <li><a href="#somos">Nosotros</a></li>
