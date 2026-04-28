@@ -1,0 +1,159 @@
+  Chatbot Matilde Agency
+  Árbol de Decisiones · Documento de Programación · v1.0
+
+Este documento contiene la estructura completa de preguntas, opciones y respuestas para programar el chatbot conversacional de Matilde Agency. Sigue el mismo formato P:/R: de referencia, organizado por nodos del árbol de decisiones con identificadores únicos para facilitar la implementación.
+
+Leyenda de identificadores
+
+
+1) Nodo de Entrada — Identificación del Perfil
+
+
+
+
+
+
+
+
+
+
+2) Capa 2 — Necesidad Principal por Perfil
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3) Capa 3 — Diagnóstico de Madurez Digital
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4) Capa 4 — Preguntas de Cierre (Desempate)
+
+
+
+
+
+
+
+
+
+
+
+
+
+5) Nodos Terminales — Outcomes y Respuestas Finales
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+6) Observaciones Generales para la Programación
+
+6.1 Detección de intención por texto libre
+
+
+6.2 Handoff humano
+
+
+6.3 Recolección de datos del lead
+
+
+6.4 Flujo del árbol — Mapa de navegación
+
+
+
+Matilde Agency · Marketing Strategy & Innovation for Healthcare
+hola@matilde.com  ·  matilde-page.vercel.app  ·  v1.0 — Abril 2026

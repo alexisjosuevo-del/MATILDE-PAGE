@@ -1,0 +1,4 @@
+Corrección aplicada:
+- Se restauró la sección 03 con 1 video y 3 imágenes reales.
+- Se mantuvo el efecto de overlay, zoom y cercanía.
+- Se dejó también el menú móvil premium funcional para iPhone y Android.

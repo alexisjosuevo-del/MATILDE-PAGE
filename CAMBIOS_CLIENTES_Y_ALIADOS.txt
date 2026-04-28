@@ -1,0 +1,1 @@
+Se reemplazaron los placeholders de la sección 03 // Clientes y aliados por 1 video y 3 imágenes reales, manteniendo overlay, cercanía visual y efecto de color/zoom en hover.

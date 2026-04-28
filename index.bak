@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matilde</title>
+    <meta name="description" content="Estrategia de marketing e innovación en salud para marcas, clínicas y proyectos del sector salud.">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="#inicio" class="brand-logo-container">
+                <img src="logo-matilde.png" alt="Matilde Logo">
+            </a>
+            <ul class="nav-links">
+                <li><a href="#somos">Nosotros</a></li>
+                <li><a href="#capacidades">Servicios</a></li>
+                <li><a href="#work">Clientes</a></li>
+                <li><a href="#proceso">Proceso</a></li>
+            </ul>
+            <a href="#contacto" class="btn-contact">Agenda una llamada</a>
+            <button class="menu-toggle" aria-label="Menú">☰</button>
+        </div>
+    </nav>
+
+    <header class="hero" id="inicio">
+        <div class="hero-video-wrapper">
+            <div class="hero-video-overlay"></div>
+            <video autoplay muted loop playsinline class="hero-video">
+                <source src="hero-video.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <div class="hero-bg-accent"></div>
+        <div class="container hero-content">
+            <span class="hero-tagline reveal-up delay-1">Estrategia de marketing e innovación en salud</span>
+            <h1 class="hero-title reveal-up">Marketing <br><span class="outline">con visión</span> en salud.</h1>
+            
+            <div class="hero-bottom-grid reveal-up">
+                <p class="hero-desc">
+                    Diseñamos estrategias de comunicación, contenido, captación e innovación para marcas, clínicas y proyectos del sector salud que buscan crecer con criterio comercial.
+                </p>
+                <div class="scroll-down">
+                    Scroll <br> para descubrir
+                    <div class="scroll-line"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="somos" class="section manifesto">
+        <div class="container manifesto-grid">
+            <div class="reveal-up">
+                <span class="section-label">01 // ¿Quiénes somos?</span>
+            </div>
+            <div class="reveal-up">
+                <h2 class="manifesto-text">
+                    Somos especialistas en crecimiento comercial para el sector salud. <span>No somos una agencia de diseño ni un despacho de redes sociales: construimos ecosistemas estratégicos que integran marketing, tecnología, creatividad e I+D.</span>
+                </h2>
+            </div>
+        </div>
+    </section>
+
+    <section id="capacidades" class="section capabilities">
+        <div class="container">
+            <span class="section-label reveal-up">02 // Servicios</span>
+            
+            <div class="cap-list reveal-stagger">
+                <div class="cap-item">
+                    <span class="cap-num">01</span>
+                    <h3 class="cap-title">Branding y posicionamiento</h3>
+                    <p class="cap-desc">Construimos marcas sólidas y diferenciadas para el sector salud, desde la estrategia hasta la identidad visual, enfocadas en posicionamiento y confianza.</p>
+                </div>
+                
+                <div class="cap-item">
+                    <span class="cap-num">02</span>
+                    <h3 class="cap-title">Contenido y estrategia digital</h3>
+                    <p class="cap-desc">Creamos contenido y experiencias digitales que conectan con pacientes y tomadores de decisión, alineados a objetivos de visibilidad y conversión.</p>
+                </div>
+                
+                <div class="cap-item">
+                    <span class="cap-num">03</span>
+                    <h3 class="cap-title">Growth y captación</h3>
+                    <p class="cap-desc">Diseñamos sistemas de marketing y ventas enfocados en generación de leads, prospección y conversión, integrando campañas, automatización y gestión de clientes.</p>
+                </div>
+                
+                <div class="cap-item">
+                    <span class="cap-num">04</span>
+                    <h3 class="cap-title">Data, tecnología y sistemas</h3>
+                    <p class="cap-desc">Implementamos herramientas, análisis de datos y sistemas que conectan todo el ecosistema, permitiendo medir, optimizar y escalar resultados.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="work" class="section work">
+        <div class="container">
+            <div class="reveal-up">
+                <span class="section-label">03 // Clientes y aliados</span>
+            </div>
+            
+            <div class="work-grid reveal-stagger">
+                <a href="#" class="work-item hover-target">
+                    <div class="work-img-wrapper bg-1">
+                        <div class="work-overlay"></div>
+                        <img src="logo-matilde.png" alt="Matilde">
+                    </div>
+                    <div class="work-info">
+                        <div>
+                            <h3 class="work-title">Estrategia comercial</h3>
+                            <span class="work-cat">Marketing especializado en salud</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="#" class="work-item hover-target">
+                    <div class="work-img-wrapper bg-2">
+                        <div class="work-overlay"></div>
+                        <img src="logo-matilde.png" alt="Matilde">
+                    </div>
+                    <div class="work-info">
+                        <div>
+                            <h3 class="work-title">Innovación e I+D</h3>
+                            <span class="work-cat">Soluciones para clínicas y marcas</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="#" class="work-item hover-target">
+                    <div class="work-img-wrapper bg-3">
+                        <div class="work-overlay"></div>
+                        <img src="logo-matilde.png" alt="Matilde">
+                    </div>
+                    <div class="work-info">
+                        <div>
+                            <h3 class="work-title">Contenido y captación</h3>
+                            <span class="work-cat">Pacientes y oportunidades reales</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="#" class="work-item hover-target">
+                    <div class="work-img-wrapper bg-4">
+                        <div class="work-overlay"></div>
+                        <img src="logo-matilde.png" alt="Matilde">
+                    </div>
+                    <div class="work-info">
+                        <div>
+                            <h3 class="work-title">Ecosistema digital integrado</h3>
+                            <span class="work-cat">Tecnología, analítica y crecimiento</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section results">
+        <div class="container reveal-up">
+            <span class="section-label">04 // Lo que construimos</span>
+            
+            <div class="results-grid reveal-stagger">
+                <div>
+                    <div class="result-stat">360°</div>
+                    <div class="result-text">Estrategias que integran marca, contenido, tecnología, analítica y captación en un solo ecosistema.</div>
+                </div>
+                <div>
+                    <div class="result-stat">Salud</div>
+                    <div class="result-text">Especialización total en clínicas, consultorios, marcas médicas y proyectos del sector salud.</div>
+                </div>
+                <div>
+                    <div class="result-stat">Escala</div>
+                    <div class="result-text">Diseñamos sistemas medibles para optimizar resultados, mejorar conversión y escalar lo que sí funciona.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section clients">
+        <div class="container reveal-up">
+            <span class="section-label">Marcas que creen en una creatividad de alta especialidad</span>
+            
+            <div class="clients-grid reveal-stagger">
+                <div class="client-logo">Marcas</div>
+                <div class="client-logo">Clínicas</div>
+                <div class="client-logo">Consultorios</div>
+                <div class="client-logo">Laboratorios</div>
+                <div class="client-logo">Salud</div>
+                <div class="client-logo">Innovación</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="proceso" class="section process">
+        <div class="container">
+            <div class="reveal-up">
+                <span class="section-label">05 // Proceso</span>
+            </div>
+            
+            <div class="process-grid reveal-stagger">
+                <div class="process-step">
+                    <div class="p-num">I.</div>
+                    <h3 class="p-title">Diagnóstico</h3>
+                    <p class="p-desc">Evaluamos tu ecosistema digital, marca y pipeline comercial. Identificamos oportunidades a partir de tu paciente, mercado y competencia.</p>
+                </div>
+                <div class="process-step">
+                    <div class="p-num">II.</div>
+                    <h3 class="p-title">Diseño de ecosistema</h3>
+                    <p class="p-desc">Construimos la estrategia integral, los canales, el contenido y las métricas para activar un crecimiento sostenible.</p>
+                </div>
+                <div class="process-step">
+                    <div class="p-num">III.</div>
+                    <h3 class="p-title">Activación estratégica</h3>
+                    <p class="p-desc">Ejecutamos la estrategia de forma integral con un equipo multidisciplinario enfocado en resultados medibles.</p>
+                </div>
+                <div class="process-step">
+                    <div class="p-num">IV.</div>
+                    <h3 class="p-title">Medición y escala</h3>
+                    <p class="p-desc">Monitoreamos resultados, optimizamos la estrategia y escalamos lo que funciona para generar oportunidades reales de negocio.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto" class="section cta-section">
+        <div class="container reveal-up">
+            <h2 class="cta-title">Hablemos de tu <br><span>proyecto en salud.</span></h2>
+            <a href="mailto:hola@matilde.com" class="btn-massive hover-target">
+                Iniciar conversación ↗
+            </a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="f-brand">
+                    <a href="#inicio" class="brand-logo-container">
+                        <img src="logo-matilde.png" alt="Matilde Logo">
+                    </a>
+                    <p>Matilde® 2026. Estrategia de marketing e innovación para marcas y proyectos del sector salud.</p>
+                </div>
+                
+                <div>
+                    <h4>Contacto</h4>
+                    <ul>
+                        <li><a href="mailto:hola@matilde.com" class="hover-target">hola@matilde.com</a></li>
+                        <li><a href="#contacto" class="hover-target">Agenda una llamada</a></li>
+                        <li><a href="#work" class="hover-target">Clientes y aliados</a></li>
+                        <li><a href="#proceso" class="hover-target">Proceso</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4>Explora</h4>
+                    <ul>
+                        <li><a href="#somos" class="hover-target">Nosotros</a></li>
+                        <li><a href="#capacidades" class="hover-target">Servicios</a></li>
+                        <li><a href="#work" class="hover-target">Clientes</a></li>
+                        <li><a href="#contacto" class="hover-target">Contacto</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-links">
+                    <a href="#" class="hover-target" style="margin-right:2rem">Aviso de Privacidad</a>
+                    <a href="#" class="hover-target">Políticas de Uso</a>
+                </div>
+                <span>Curado y desarrollado para Matilde.</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

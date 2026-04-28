@@ -1,0 +1,821 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    /* Nueva Paleta Cromática Basada en Visme (Slide 6) */
+    --bg-main: #F5F5F7;      /* Blanco Humo / Gris muy claro */
+    --bg-alt: #E8E8EB;       /* Gris sutil para contraste de bloques */
+    --text-primary: #1A1C20; /* Gris Oscuro / Casi Negro para contraste brutal */
+    --text-secondary: #5A5F68; /* Gris medio para lectura secundaria */
+    --accent-cyan: #32A3B3;  /* Teal / Turquesa de Visme */
+    --accent-hover: #FFEE46; /* Amarillo vibrante de Visme */
+    
+    --border-color: rgba(26, 28, 32, 0.1); /* Bordes oscuros tenues */
+    
+    --font-heading: 'Syne', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    
+    --transition-smooth: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-slow: 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* =========================================
+   RESET & BASE
+   ========================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    line-height: 1.5;
+    overflow-x: hidden;
+    opacity: 0;
+    transition: opacity var(--transition-slow);
+    cursor: none; 
+}
+
+body.loaded {
+    opacity: 1;
+}
+
+/* Tipografía Editorial */
+h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    cursor: none;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/* Cursor Custom Boutique */
+.custom-cursor {
+    position: fixed;
+    top: 0; left: 0;
+    width: 8px;
+    height: 8px;
+    background: var(--accent-cyan);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: width 0.3s, height 0.3s, background 0.3s;
+}
+
+.cursor-follower {
+    position: fixed;
+    top: 0; left: 0;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(50, 163, 179, 0.5); /* Teal border */
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    margin-top: -16px;
+    margin-left: -16px;
+    transition: width 0.3s, height 0.3s, border-color 0.3s, margin 0.3s;
+}
+
+.custom-cursor.hovering {
+    background: transparent;
+}
+
+.cursor-follower.hovering {
+    width: 60px;
+    height: 60px;
+    margin-top: -26px;
+    margin-left: -26px;
+    background: rgba(255, 238, 70, 0.15); /* Yellow glow */
+    border-color: var(--accent-hover);
+}
+
+/* =========================================
+   LAYOUT UTILS
+   ========================================= */
+.container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 4vw;
+}
+
+.section {
+    padding: 12vw 0;
+    position: relative;
+    z-index: 2;
+}
+
+/* =========================================
+   NAVBAR
+   ========================================= */
+.navbar {
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    padding: 2.5rem 0;
+    z-index: 100;
+    transition: background 0.4s ease, padding 0.4s ease, transform 0.4s ease;
+    /* Eliminamos mix-blend-mode para evitar que el logo cambie de color */
+}
+
+.navbar.scrolled {
+    padding: 1.5rem 0;
+    background: rgba(245, 245, 247, 0.96); /* Blanco humo semi-transparente */
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* LOGO: Se eliminan todos los filtros de color */
+.brand-logo-container img {
+    height: 54px; /* Tamaño aumentado para mayor presencia visual */
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.brand-logo-container:hover img {
+    transform: scale(1.05); /* Interacción física en lugar de cromática */
+}
+
+.nav-links {
+    display: flex;
+    gap: 3vw;
+    list-style: none;
+}
+
+.nav-links a {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    position: relative;
+    color: var(--text-primary);
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0%;
+    height: 2px;
+    background: var(--accent-hover); /* Línea amarilla en hover */
+    transition: width 0.4s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.btn-contact {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 700;
+    color: #F5F5F7; /* Elemento invertido */
+    background: var(--accent-cyan); /* Botón turquesa */
+    padding: 14px 32px;
+    border-radius: 40px;
+    transition: var(--transition-smooth);
+    border: none;
+}
+
+.btn-contact:hover {
+    background: var(--accent-hover); /* Pasa a amarillo */
+    color: var(--text-primary); /* Texto oscuro */
+}
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 2rem;
+}
+
+/* =========================================
+   HERO EDITORIAL
+   ========================================= */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 8vw;
+    position: relative;
+    background: var(--bg-main);
+    overflow: hidden; /* IMPORTANTE: Evita que el video extienda el tamaño de la pantalla */
+}
+
+/* =========================================
+   HERO VIDEO BACKGROUND
+   ========================================= */
+.hero-video-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0; /* Coloca todo el bloque visual al fondo absoluto del hero */
+    overflow: hidden;
+}
+
+.hero-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Mantiene la proporción cinemática cortando los bordes al hacer resize */
+    object-position: center;
+}
+
+.hero-video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Va encima del video pero debajo de tu texto */
+    background: rgba(245, 245, 247, 0.65); /* Overlay semi-transparente Blanco Humo para garantizar contraste total */
+}
+
+.hero-bg-accent {
+    position: absolute;
+    top: 15%;
+    right: 5%;
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(circle, rgba(255, 238, 70, 0.15) 0%, transparent 65%);
+    filter: blur(80px);
+    z-index: 1; /* Elevado a 1 para seguir aportando destello sutil sobre el video */
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+}
+
+.hero-tagline {
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent-cyan);
+    margin-bottom: 2rem;
+    display: block;
+}
+
+.hero-title {
+    font-size: clamp(2.5rem, 6.8vw, 10rem); /* Reducción de la escala máxima para encuadrar la palabra larga */
+    text-transform: uppercase;
+    white-space: normal; /* Eliminado el nowrap para permitir fluido responsive sin cortar */
+    word-break: break-word;
+    margin-bottom: 2rem;
+    transform: translateX(-1vw);
+    color: var(--text-primary);
+    max-width: 100%;
+}
+
+.hero-title .outline {
+    color: transparent;
+    -webkit-text-stroke: 2px var(--accent-cyan); /* Borde Teal */
+}
+
+.hero-bottom-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10vw;
+    align-items: end;
+    margin-top: 4vw;
+}
+
+.hero-desc {
+    font-size: clamp(1.2rem, 1.5vw, 1.8rem);
+    font-weight: 400;
+    color: var(--text-secondary);
+    max-width: 600px;
+}
+
+.scroll-down {
+    text-align: right;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1rem;
+    color: var(--text-primary);
+}
+
+.scroll-line {
+    width: 2px;
+    height: 60px;
+    background: var(--border-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.scroll-line::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 50%;
+    background: var(--accent-hover); /* Baja una línea amarilla */
+    animation: scrollDrop 2s ease-in-out infinite;
+}
+
+@keyframes scrollDrop {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(200%); }
+}
+
+/* =========================================
+   SOMOS MÁI (MANIFESTO)
+   ========================================= */
+/* Cambio cromático drástico: Fondo oscuro para esta sección */
+.manifesto {
+    background: #1A1C20; /* Dark grey de Visme */
+    color: #F5F5F7;
+}
+
+.manifesto .section-label {
+    color: var(--accent-hover); /* Label amarillo sobre fondo oscuro */
+}
+
+.manifesto-grid {
+    display: grid;
+    grid-template-columns: 2fr 5fr;
+    gap: 5vw;
+}
+
+.section-label {
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent-cyan);
+    position: sticky;
+    top: 120px;
+}
+
+.manifesto-text {
+    font-size: clamp(2rem, 3.5vw, 4.5rem);
+    font-family: var(--font-heading);
+    line-height: 1.2;
+}
+
+/* Span en turquesa de Visme dentro del manifiesto oscuro */
+.manifesto-text span {
+    color: var(--accent-cyan);
+}
+
+/* =========================================
+   CAPACIDADES (LISTA INTERACTIVA)
+   ========================================= */
+.capabilities {
+    padding: 10vw 0;
+    background: var(--bg-alt); /* Gris sutil */
+}
+
+.cap-list {
+    margin-top: 5vw;
+    border-top: 2px solid var(--border-color);
+}
+
+.cap-item {
+    padding: 3vw 0;
+    border-bottom: 1px solid var(--border-color);
+    display: grid;
+    grid-template-columns: 0.5fr 3fr 2fr;
+    align-items: center;
+    position: relative;
+    transition: var(--transition-smooth);
+}
+
+/* Overlay en Hover completamente amarilla (Visme) */
+.cap-item::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 0%; height: 100%;
+    background: var(--accent-hover);
+    transition: width 0.6s ease;
+    z-index: 0;
+}
+
+.cap-item:hover::before {
+    width: 100%;
+}
+
+.cap-item > * {
+    position: relative;
+    z-index: 1;
+}
+
+.cap-num {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+}
+
+.cap-title {
+    font-size: clamp(2.5rem, 5vw, 6rem);
+    text-transform: uppercase;
+    transition: var(--transition-smooth);
+    color: var(--text-primary);
+}
+
+.cap-desc {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: var(--transition-smooth);
+}
+
+/* Cuando se hace hover, todo se vuelve negro para contrastar con el amarillo */
+.cap-item.active .cap-num,
+.cap-item.active .cap-title,
+.cap-item.active .cap-desc {
+    color: #1A1C20;
+}
+
+.cap-item.active .cap-title {
+    transform: translateX(20px);
+}
+
+.cap-item.active .cap-desc {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* =========================================
+   CASOS (WORK MASONRY)
+   ========================================= */
+.work {
+    background: var(--bg-main);
+}
+
+.work-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4vw;
+    margin-top: 5vw;
+}
+
+.work-item {
+    position: relative;
+}
+
+.work-item:nth-child(even) {
+    margin-top: 10vw;
+}
+
+.work-img-wrapper {
+    overflow: hidden;
+    aspect-ratio: 4/5;
+    background: var(--border-color);
+    position: relative;
+}
+
+/* Overlay teal en las imágenes */
+.work-overlay {
+    position: absolute;
+    top:0; left:0; width:100%; height:100%;
+    background: var(--accent-cyan);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 1;
+    pointer-events: none;
+    mix-blend-mode: multiply;
+}
+
+.work-item:hover .work-overlay {
+    opacity: 0.8; /* Efecto cinemático muy notorio */
+}
+
+.work-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1s ease;
+    filter: grayscale(100%); /* Las fotos grises estallan a color teal en hover */
+}
+
+.work-item:hover img {
+    transform: scale(1.05);
+}
+
+.work-info {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.work-title {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.work-cat {
+    color: var(--accent-cyan);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+}
+
+/* =========================================
+   LOGROS (RESULTADOS)
+   ========================================= */
+/* Cambio radical: Fondo Cian con texto oscuro (High contrast Visme) */
+.results {
+    background: var(--accent-cyan);
+    color: #1A1C20;
+    padding: 8vw 0;
+}
+
+.results .section-label {
+    color: #1A1C20;
+    border-bottom: 2px solid rgba(26,28,32,0.2);
+    padding-bottom: 1rem;
+    display: inline-block;
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4vw;
+    border-top: 2px solid rgba(26,28,32,0.2);
+    padding-top: 4vw;
+    margin-top: 4vw;
+}
+
+/* El stat en amarillo para vibrar sobre el fondo teal */
+.result-stat {
+    font-size: clamp(4rem, 8vw, 10rem);
+    font-family: var(--font-heading);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--accent-hover); 
+}
+
+.result-text {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    color: #1A1C20;
+}
+
+/* =========================================
+   CLIENTES (LOGOS GRID)
+   ========================================= */
+.clients {
+    background: var(--bg-alt);
+}
+
+.clients-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2px;
+    background: var(--border-color);
+    border: 2px solid var(--border-color);
+    margin-top: 5vw;
+}
+
+.client-logo {
+    background: var(--bg-main);
+    padding: 4vw;
+    aspect-ratio: 16/9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    transition: all 0.4s ease;
+}
+
+.client-logo:hover {
+    color: #1A1C20;
+    background: var(--accent-hover); /* Pasan a vibrante amarillo al hover */
+}
+
+/* =========================================
+   PROCESO
+   ========================================= */
+.process {
+    background: #1A1C20; /* Dark background section */
+    color: #F5F5F7;
+}
+
+.process .section-label {
+    color: var(--accent-cyan);
+}
+
+.process-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin-top: 5vw;
+}
+
+.process-step {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 4vw;
+    padding: 4vw 0;
+    border-bottom: 1px solid rgba(245,245,247,0.1);
+}
+
+.process-step:first-child {
+    border-top: 1px solid rgba(245,245,247,0.1);
+}
+
+.p-num {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    color: var(--accent-hover); /* Amarillo en los números */
+}
+
+.p-title {
+    font-size: 2.5rem;
+}
+
+.p-desc {
+    color: #8c9096; /* Gris texto en dark mode */
+    font-size: 1.1rem;
+}
+
+/* =========================================
+   FINAL CTA
+   ========================================= */
+.cta-section {
+    padding: 15vw 0;
+    text-align: center;
+    background: var(--accent-hover); /* Fondo Amarillo vibrante total */
+    color: #1A1C20;
+}
+
+.cta-title {
+    font-size: clamp(3rem, 7vw, 9rem);
+    text-transform: uppercase;
+    margin-bottom: 4vw;
+    color: #1A1C20;
+}
+
+.cta-title span {
+    color: transparent;
+    -webkit-text-stroke: 2px #1A1C20; /* Stroke oscuro */
+}
+
+.btn-massive {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    background: #1A1C20; /* Botón oscuro */
+    color: #F5F5F7;
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 2vw, 2.5rem);
+    font-weight: 700;
+    padding: 2vw 4vw;
+    border-radius: 100px;
+    border: none;
+    transition: background 0.4s ease, color 0.4s ease;
+}
+
+.btn-massive:hover {
+    background: var(--accent-cyan); /* Hover Teal */
+    color: #F5F5F7;
+}
+
+/* =========================================
+   FOOTER
+   ========================================= */
+.footer {
+    padding: 6vw 0 2vw;
+    background: var(--bg-main);
+    border-top: 1px solid var(--border-color);
+}
+
+.footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 4vw;
+    margin-bottom: 8vw;
+}
+
+/* LOGO EN FOOTER: CERO FILTROS */
+.f-brand img {
+    height: 96px; /* Escalado en proporción geométrica para mantener consistencia con el navbar */
+    width: auto;
+    object-fit: contain;
+    margin-bottom: 2rem;
+}
+
+.f-brand p {
+    color: var(--text-secondary);
+    max-width: 300px;
+    font-weight: 500;
+}
+
+.footer h4 {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+}
+
+.footer ul {
+    list-style: none;
+}
+
+.footer li {
+    margin-bottom: 0.8rem;
+}
+
+.footer a {
+    color: var(--text-secondary);
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.footer a:hover {
+    color: var(--accent-cyan);
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 2px solid var(--border-color);
+    padding-top: 2rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* =========================================
+   ANIMATIONS (REVEALS)
+   ========================================= */
+.reveal-up {
+    opacity: 0;
+    transform: translateY(60px);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-up.revealed { opacity: 1; transform: translateY(0); }
+.reveal-fade { opacity: 0; transition: opacity 1.5s ease; }
+.reveal-fade.revealed { opacity: 1; }
+.reveal-stagger > * {
+    opacity: 0; transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-stagger > *.revealed { opacity: 1; transform: translateY(0); }
+
+/* =========================================
+   MEDIA QUERIES
+   ========================================= */
+@media (max-width: 992px) {
+    .hero-bottom-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .manifesto-grid { grid-template-columns: 1fr; }
+    .section-label { position: relative; top: 0; margin-bottom: 2rem; }
+    .cap-item { grid-template-columns: 1fr; gap: 1rem; }
+    .cap-desc { opacity: 1; transform: none; margin-bottom: 1rem; color: #1A1C20; }
+    /* Fix para mobile hover state */
+    .cap-item::before { width: 100%; background: var(--bg-alt); opacity: 0.5; }
+    .work-grid { grid-template-columns: 1fr; }
+    .work-item:nth-child(even) { margin-top: 0; }
+    .process-step { grid-template-columns: 1fr; gap: 1rem; }
+    .footer-top { grid-template-columns: 1fr; gap: 3rem; }
+}
+
+@media (max-width: 768px) {
+    .nav-links { display: none; }
+    .menu-toggle { display: block; }
+    .btn-contact { display: none; }
+    .results-grid { grid-template-columns: 1fr; text-align: center; }
+    .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+}
