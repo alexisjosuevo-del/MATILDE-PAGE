@@ -2,18 +2,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // 0. Performance: Intelligent Video Load (100% Score Strategy)
     const heroVideo = document.getElementById('heroVideo');
     if (heroVideo) {
-        // Load video after a slight delay to allow PageSpeed to finish initial paint audit
-        setTimeout(() => {
-            const source = heroVideo.querySelector('source');
-            if (source && source.dataset.src) {
-                source.src = source.dataset.src;
-                heroVideo.load();
-                heroVideo.play().catch(() => {
-                    // Fallback for browsers that block auto-play
-                    document.addEventListener('touchstart', () => heroVideo.play(), { once: true });
-                });
-            }
-        }, 1500); // 1.5s delay to "bypass" the heavy LCP audit while keeping the experience
+        const source = heroVideo.querySelector('source');
+        if (source && source.dataset.src) {
+            source.src = source.dataset.src;
+            heroVideo.load();
+            heroVideo.play().catch(() => {
+                document.addEventListener('touchstart', () => heroVideo.play(), { once: true });
+            });
+        }
     }
 
     // 1. Initial Load (Streamlined for 100% Performance)
@@ -70,35 +66,44 @@ document.addEventListener('DOMContentLoaded', () => {
     // 4. Custom Cursor for Desktop (Boutique Agency feel)
     if(window.innerWidth > 992) {
         const cursor = document.createElement('div');
-        cursor.classList.add('custom-cursor');
-        document.body.appendChild(cursor);
+    const cursor = document.createElement('div');
+    cursor.classList.add('custom-cursor');
+    document.body.appendChild(cursor);
 
-        const cursorFollower = document.createElement('div');
-        cursorFollower.classList.add('cursor-follower');
-        document.body.appendChild(cursorFollower);
+    const cursorFollower = document.createElement('div');
+    cursorFollower.classList.add('cursor-follower');
+    document.body.appendChild(cursorFollower);
 
+    // 3. Custom Cursor (Desktop Only for Performance)
+    const cursorEl = document.querySelector('.custom-cursor');
+    const cursorDot = document.querySelector('.cursor-dot');
+    
+    if (cursorEl && window.innerWidth > 768) {
         let mouseX = 0, mouseY = 0;
         let cursorX = 0, cursorY = 0;
-        let followerX = 0, followerY = 0;
 
         document.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
         });
 
-        const loop = () => {
-            // Speed of follower
-            cursorX += (mouseX - cursorX) * 0.4;
-            cursorY += (mouseY - cursorY) * 0.4;
-            followerX += (mouseX - followerX) * 0.1;
-            followerY += (mouseY - followerY) * 0.1;
-
-            cursor.style.transform = `translate(${cursorX}px, ${cursorY}px)`;
-            cursorFollower.style.transform = `translate(${followerX}px, ${followerY}px)`;
+        const animateCursor = () => {
+            let dx = mouseX - cursorX;
+            let dy = mouseY - cursorY;
             
-            requestAnimationFrame(loop);
+            cursorX += dx * 0.15;
+            cursorY += dy * 0.15;
+
+            cursorEl.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
+            cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+            
+            requestAnimationFrame(animateCursor);
         };
-        loop();
+        animateCursor();
+    } else if (cursorEl) {
+        cursorEl.style.display = 'none';
+        cursorDot.style.display = 'none';
+    }
 
         // Hover effect on links and buttons
         document.querySelectorAll('a, button, .hover-target').forEach(el => {

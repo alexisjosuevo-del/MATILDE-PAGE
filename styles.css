@@ -31,7 +31,7 @@
     --text-primary: #1A1C20; /* Gris Oscuro / Casi Negro para contraste brutal */
     --text-secondary: #444444; /* Gris más oscuro para asegurar contraste 100% */
     --accent-cyan: #2B8E9B;  /* Oscurecido para accesibilidad AA */
-    --accent-hover: #FFEE46; /* Amarillo vibrante de Visme */
+    --accent-hover: #D4B900; /* Amarillo oscurecido para accesibilidad */
     
     --border-color: rgba(26, 28, 32, 0.1); /* Bordes oscuros tenues */
     
@@ -94,7 +94,7 @@ body {
     font-family: var(--font-body);
     line-height: 1.5;
     overflow-x: hidden;
-    cursor: none; 
+    /* cursor: none; */ /* Eliminado por accesibilidad */
 }
 
 body.loaded {
@@ -338,7 +338,8 @@ img {
 /* En móvil: ocultar el video para no descargar 6MB en celular */
 @media (max-width: 768px) {
     .hero-video-wrapper {
-        display: none;
+        display: block; /* Habilitar video en celular */
+        height: 100%;
     }
     /* Fondo degradado suave como reemplazo visual del video */
     .hero {
