@@ -3,6 +3,8 @@
 
 <head>
     <link rel="preload" href="logo-matilde.webp" as="image" fetchpriority="high">
+    <link rel="preload" href="LEMONMILK-Regular.otf" as="font" type="font/otf" crossorigin>
+    <link rel="preload" href="fonts/outfit-700.ttf" as="font" type="font/ttf" crossorigin>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matilde Montoya | Estrategia de Marketing e Innovación en Salud</title>
@@ -19,8 +21,9 @@
         @font-face{font-family:'Outfit';src:url('fonts/outfit-700.ttf') format('truetype');font-weight:700;font-display:swap}
         *{margin:0;padding:0;box-sizing:border-box}
         body{font-family:'Outfit','Inter',system-ui,-apple-system,sans-serif;background:#f5f5f7;color:#1a1a2e;overflow-x:hidden}
-        .navbar{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:1rem 0;transition:all .4s;min-height:260px;background:transparent}
-        .hero-content h1{min-height:260px}
+        .navbar{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:10px 0;height:260px;background:transparent;display:flex;align-items:center}
+        .hero-content h1{min-height:360px;margin-top:260px;line-height:1.05}
+        #aiModalOverlay{display:none}
         .container{max-width:1400px;margin:0 auto;padding:0 5%}
         .nav-container{display:flex;align-items:center;justify-content:space-between}
         .brand-logo-container{display:block;min-height:70px;min-width:200px}
@@ -38,9 +41,10 @@
             .hero-video{display:block}
             .nav-links{display:none}
             .menu-toggle{display:block}
-            .brand-logo-container img{height:220px;width:auto}
-            .navbar{min-height:260px}
-            .menu-toggle{display:flex;z-index:1001;color:#1a1a2e}
+            .brand-logo-container img{height:220px;width:auto;display:block}
+            .navbar{height:260px;padding:20px 0}
+            .menu-toggle{display:flex;z-index:1001;color:#1a1a2e;margin-top:0}
+            .hero-content h1{margin-top:260px;min-height:360px}
         }
         @media(min-width:769px){.hero-mobile-poster{display:none}.menu-toggle{display:none}}
         .reveal-up{opacity:0;transform:translateY(20px)}
@@ -185,7 +189,7 @@
                     <div class="work-img-wrapper bg-2">
                         <div class="work-overlay"></div>
                         <img class="work-media" src="clientes-aliados-1.webp" alt="Matilde Agency Branding"
-                            loading="lazy" decoding="async">
+                            loading="lazy" decoding="async" width="600" height="800">
                     </div>
                     <div class="work-info">
                         <div>
@@ -199,7 +203,7 @@
                     <div class="work-img-wrapper bg-3">
                         <div class="work-overlay"></div>
                         <img class="work-media" src="clientes-aliados-2.webp" alt="Tecnología médica avanzada"
-                            loading="lazy" decoding="async">
+                            loading="lazy" decoding="async" width="600" height="800">
                     </div>
                     <div class="work-info">
                         <div>
@@ -337,7 +341,7 @@
             <div class="team-scene" id="teamScene">
                 <div class="team-center">
                     <small>Equipo</small>
-                    <img src="Logo_matilde_Blan.webp" alt="Matilde Logo" class="team-center-logo" loading="lazy">
+                    <img src="Logo_matilde_Blan.webp" alt="Matilde Logo" class="team-center-logo" loading="lazy" width="160" height="120">
                 </div>
 
                 <!-- Miembros del Equipo -->
