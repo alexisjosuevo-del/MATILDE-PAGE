@@ -240,7 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // MANTÉN TU CLAVE API SEGURA: En producción, no debes exponer tu clave en el HTML/JS que se envía al cliente.
     // Esto es un modelo conceptual para usar Groq (Llama 3).
-    const GROQ_API_KEY = ''; 
+    const GROQ_API_KEY = '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'; 
     const matildeRules = `Eres Matilde Montoya, la experta IA de la agencia Matilde Agency (marketing, estrategia e innovación en salud corporativa).
 Reglas de conducta:
 1. SOLO hablas de servicios de la agencia, planes, marketing médico y salud corporativa. Responde corto (1-2 párrafos) y súper empático.
