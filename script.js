@@ -63,57 +63,46 @@ document.addEventListener('DOMContentLoaded', () => {
         revealObserver.observe(el);
     });
 
-    // 4. Custom Cursor for Desktop (Boutique Agency feel)
-    if(window.innerWidth > 992) {
+    // 4. Custom Cursor (Desktop Only for Performance & Accessibility)
+    if (window.innerWidth > 992) {
         const cursor = document.createElement('div');
-    const cursor = document.createElement('div');
-    cursor.classList.add('custom-cursor');
-    document.body.appendChild(cursor);
+        cursor.classList.add('custom-cursor');
+        document.body.appendChild(cursor);
 
-    const cursorFollower = document.createElement('div');
-    cursorFollower.classList.add('cursor-follower');
-    document.body.appendChild(cursorFollower);
+        const cursorFollower = document.createElement('div');
+        cursorFollower.classList.add('cursor-follower');
+        document.body.appendChild(cursorFollower);
 
-    // 3. Custom Cursor (Desktop Only for Performance)
-    const cursorEl = document.querySelector('.custom-cursor');
-    const cursorDot = document.querySelector('.cursor-dot');
-    
-    if (cursorEl && window.innerWidth > 768) {
         let mouseX = 0, mouseY = 0;
         let cursorX = 0, cursorY = 0;
+        let followerX = 0, followerY = 0;
 
         document.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
         });
 
-        const animateCursor = () => {
-            let dx = mouseX - cursorX;
-            let dy = mouseY - cursorY;
-            
-            cursorX += dx * 0.15;
-            cursorY += dy * 0.15;
+        const loop = () => {
+            cursorX += (mouseX - cursorX) * 0.4;
+            cursorY += (mouseY - cursorY) * 0.4;
+            followerX += (mouseX - followerX) * 0.15;
+            followerY += (mouseY - followerY) * 0.15;
 
-            cursorEl.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
-            cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+            cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
+            cursorFollower.style.transform = `translate3d(${followerX}px, ${followerY}px, 0)`;
             
-            requestAnimationFrame(animateCursor);
+            requestAnimationFrame(loop);
         };
-        animateCursor();
-    } else if (cursorEl) {
-        cursorEl.style.display = 'none';
-        cursorDot.style.display = 'none';
-    }
+        loop();
 
-        // Hover effect on links and buttons
         document.querySelectorAll('a, button, .hover-target').forEach(el => {
             el.addEventListener('mouseenter', () => {
-                cursorFollower.classList.add('hovering');
                 cursor.classList.add('hovering');
+                cursorFollower.classList.add('hovering');
             });
             el.addEventListener('mouseleave', () => {
-                cursorFollower.classList.remove('hovering');
                 cursor.classList.remove('hovering');
+                cursorFollower.classList.remove('hovering');
             });
         });
     }

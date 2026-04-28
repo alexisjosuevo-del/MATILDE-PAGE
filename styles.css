@@ -31,7 +31,7 @@
     --text-primary: #1A1C20; /* Gris Oscuro / Casi Negro para contraste brutal */
     --text-secondary: #444444; /* Gris más oscuro para asegurar contraste 100% */
     --accent-cyan: #2B8E9B;  /* Oscurecido para accesibilidad AA */
-    --accent-hover: #D4B900; /* Amarillo oscurecido para accesibilidad */
+    --accent-hover: #B59E00; /* Amarillo dorado oscurecido para contraste 100% (WCAG AA) */
     
     --border-color: rgba(26, 28, 32, 0.1); /* Bordes oscuros tenues */
     
