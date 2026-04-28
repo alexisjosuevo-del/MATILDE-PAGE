@@ -107,14 +107,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 5. Mobile Menu
+    // 5. Mobile Menu (Fixed and Accessible)
     const menuToggle = document.querySelector('.menu-toggle');
-    const navMenu = document.querySelector('.nav-links');
+    const navLinks = document.querySelector('.nav-links');
     
-    if(menuToggle && navMenu) {
+    if(menuToggle && navLinks) {
         menuToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
+            const isActive = navLinks.classList.toggle('active');
             menuToggle.classList.toggle('active');
+            menuToggle.setAttribute('aria-expanded', isActive);
+        });
+
+        // Close menu when clicking a link
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                menuToggle.classList.remove('active');
+                menuToggle.setAttribute('aria-expanded', 'false');
+            });
         });
     }
 
