@@ -312,6 +312,7 @@ img {
 .brand-logo-container img {
     height: 260px;
     width: auto;
+    max-height: 18vh;
     object-fit: contain;
     background: transparent;
     border: 0;
@@ -1511,7 +1512,7 @@ img {
     }
 
     .brand-logo-container img {
-        height: 62px;
+        height: 120px;
     }
 
     .menu-toggle {

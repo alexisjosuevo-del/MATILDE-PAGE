@@ -28,7 +28,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }, { once: true });
         };
         // Faster load for mobile videos
-        setTimeout(loadAndPlayVideo, 800);
+        setTimeout(loadAndPlayVideo, 400); 
+        
+        // Force play on first touch if blocked
+        document.body.addEventListener('touchstart', () => {
+            if (heroVideo.paused) heroVideo.play().catch(() => {});
+        }, { once: true });
     }
 
     // 1. Initial Load
