@@ -240,7 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // MANTÉN TU CLAVE API SEGURA: En producción, no debes exponer tu clave en el HTML/JS que se envía al cliente.
     // Esto es un modelo conceptual para usar Groq (Llama 3).
-    const GROQ_API_KEY = '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'; 
+    const GROQ_API_KEY = ''; 
     const matildeRules = `Eres Matilde Montoya, la experta IA de la agencia Matilde Agency (marketing, estrategia e innovación en salud corporativa).
 Reglas de conducta:
 1. SOLO hablas de servicios de la agencia, planes, marketing médico y salud corporativa. Responde corto (1-2 párrafos) y súper empático.
@@ -565,36 +565,52 @@ FLUJO:
         handleProcessScroll();
     }
 
-    // 11. Mobile Process Selection Effect (Premium Feel)
+    // 11. Mobile Process Selection Effect (Premium Feel) - Throttled for 100% Performance
     if (window.innerWidth <= 768) {
         const mobileProcessCards = document.querySelectorAll('.process-card-item');
+        let ticking = false;
         
         const handleMobileScroll = () => {
-            const centerY = window.innerHeight / 2;
-            let closestCard = null;
-            let minDistance = Infinity;
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const centerY = window.innerHeight / 2;
+                    let closestCard = null;
+                    let minDistance = Infinity;
 
-            mobileProcessCards.forEach(card => {
-                const rect = card.getBoundingClientRect();
-                const cardCenterY = rect.top + rect.height / 2;
-                const distance = Math.abs(centerY - cardCenterY);
+                    mobileProcessCards.forEach(card => {
+                        const rect = card.getBoundingClientRect();
+                        const cardCenterY = rect.top + rect.height / 2;
+                        const distance = Math.abs(centerY - cardCenterY);
 
-                if (distance < minDistance) {
-                    minDistance = distance;
-                    closestCard = card;
-                }
-            });
+                        if (distance < minDistance) {
+                            minDistance = distance;
+                            closestCard = card;
+                        }
+                    });
 
-            mobileProcessCards.forEach(card => {
-                if (card === closestCard) {
-                    card.classList.add('is-active');
-                } else {
-                    card.classList.remove('is-active');
-                }
-            });
+                    mobileProcessCards.forEach(card => {
+                        if (card === closestCard) {
+                            card.classList.add('is-active');
+                        } else {
+                            card.classList.remove('is-active');
+                        }
+                    });
+                    ticking = false;
+                });
+                ticking = true;
+            }
         };
 
-        window.addEventListener('scroll', handleMobileScroll);
-        handleMobileScroll(); // Initial check
+        window.addEventListener('scroll', handleMobileScroll, { passive: true });
+        handleMobileScroll();
+
+        // 12. Force Video Play on Mobile (Bypass Strict Policies)
+        const forceVideo = () => {
+            if (heroVideo) heroVideo.play().catch(() => {});
+            document.removeEventListener('touchstart', forceVideo);
+            document.removeEventListener('scroll', forceVideo);
+        };
+        document.addEventListener('touchstart', forceVideo, { passive: true });
+        document.addEventListener('scroll', forceVideo, { passive: true });
     }
 });
