@@ -48,7 +48,7 @@
     <header class="hero" id="inicio">
         <div class="hero-video-wrapper">
             <div class="hero-video-overlay"></div>
-            <video muted loop playsinline class="hero-video" id="heroVideo" poster="logo-matilde.webp">
+            <video muted loop playsinline class="hero-video" id="heroVideo" poster="logo-matilde.webp" fetchpriority="high" decoding="async">
                 <source data-src="hero-video.mp4" type="video/mp4">
             </video>
         </div>
@@ -397,7 +397,7 @@
     <section id="contacto" class="section cta-section">
         <div class="container reveal-up">
             <h2 class="cta-title">Hablemos de tu <br>proyecto en salud.</h2>
-            <a href="#" id="btnIniciarConversacion" class="btn-massive hover-target">
+            <a href="#" id="btnIniciarConversacion" class="btn-massive hover-target" aria-label="Iniciar chat con la inteligencia artificial Matilde">
                 Iniciar conversación ↗
             </a>
         </div>

@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 0. Performance: Intelligent Video Load (100% Score Strategy)
+    // 0. Performance: Immediate Video Load
     const heroVideo = document.getElementById('heroVideo');
     if (heroVideo) {
         const source = heroVideo.querySelector('source');
@@ -262,8 +262,6 @@ FLUJO:
         { role: "system", content: matildeRules }
     ];
 
-    // Interactive Avatar behavior - Disabled for Video version
-    /*
     if (aiUserInput && aiCharacterVideo) {
         aiUserInput.addEventListener('focus', () => {
             aiCharacterVideo.src = "matilde-eyelashes.webp";
@@ -272,7 +270,6 @@ FLUJO:
             aiCharacterVideo.src = "PERSONAJE IA.webp";
         });
     }
-    */
 
     if (btnIniciarConversacion && aiModalOverlay) {
         btnIniciarConversacion.addEventListener('click', (e) => {
