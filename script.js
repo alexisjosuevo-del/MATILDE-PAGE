@@ -374,6 +374,8 @@ Servicios: Paquete Basic $39k MXN, Pro $79k, Elite $169k. Pregunta perfil del us
             members.forEach((m, i) => {
                 m.style.width = `${itemSize}px`;
                 m.style.height = `${itemSize}px`;
+                m.style.left = '0';
+                m.style.top = '0';
                 const a = angle + (i * (Math.PI * 2 / members.length));
                 const x = cx + Math.cos(a - Math.PI / 2) * radius - itemSize / 2;
                 const y = cy + Math.sin(a - Math.PI / 2) * radius - itemSize / 2;

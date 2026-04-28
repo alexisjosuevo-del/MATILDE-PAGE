@@ -310,8 +310,8 @@ img {
 
 /* LOGO: Se eliminan todos los filtros de color */
 .brand-logo-container img {
-    height: 70px;
-    width: 220px;
+    height: 260px;
+    width: auto;
     object-fit: contain;
     background: transparent;
     border: 0;
@@ -1945,15 +1945,16 @@ img {
 }
 
 .team-center-logo {
-    width: 80%;
+    width: 90%;
     height: auto;
     object-fit: contain;
     margin-top: 0.5rem;
-    filter: drop-shadow(0 5px 15px rgba(255,255,255,0.2));
 }
 
 .team-member {
     position: absolute;
+    left: 0;
+    top: 0;
     /* El tamaño y posición se setean por JavaScript */
     z-index: 2;
     transition: transform 0.3s ease;
