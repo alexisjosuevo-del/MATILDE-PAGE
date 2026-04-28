@@ -13,11 +13,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const playPromise = heroVideo.play();
             if (playPromise !== undefined) {
                 playPromise.then(() => {
-                    if (heroPoster) heroPoster.classList.add('video-ready');
+                    if (heroPoster) {
+                        heroPoster.style.display = 'none';
+                        heroPoster.classList.add('video-ready');
+                    }
                 }).catch(() => {
                     const startOnTouch = () => {
                         heroVideo.play().then(() => {
-                            if (heroPoster) heroPoster.classList.add('video-ready');
+                            if (heroPoster) {
+                                heroPoster.style.display = 'none';
+                                heroPoster.classList.add('video-ready');
+                            }
                         }).catch(() => {});
                     };
                     document.addEventListener('touchstart', startOnTouch, { once: true, passive: true });
