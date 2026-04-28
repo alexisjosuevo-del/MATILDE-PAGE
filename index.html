@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matilde Montoya | Estrategia de Marketing e Innovación en Salud</title>
-    <meta name="description"
-        content="Estrategia de marketing e innovación en salud corporativa. Ayudamos a marcas, clínicas y farmacéuticas a crecer con tecnología y creatividad.">
+    <meta name="description" content="Estrategia de marketing e innovación en salud corporativa. Ayudamos a marcas, clínicas y farmacéuticas a crecer con tecnología y creatividad.">
     <link rel="canonical" href="https://matilde.agency/">
 
     <!-- Preconexiones -->
@@ -14,13 +13,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://api.groq.com">
 
-    <!-- Preload recursos críticos (LCP) -->
+    <!-- Preload Único Recurso LCP Crítico -->
     <link rel="preload" href="logo-matilde.webp" as="image" fetchpriority="high">
-    <link rel="preload" href="Nexa-Heavy.ttf" as="font" type="font/truetype" crossorigin>
-    <link rel="preload" href="Nexa-ExtraLight.ttf" as="font" type="font/truetype" crossorigin>
-    <link rel="preload" href="LEMONMILK-Regular.otf" as="font" type="font/otf" crossorigin>
 
-    <!-- Google Fonts: carga no bloqueante -->
+    <!-- Google Fonts: preload CSS + async load (no render-blocking) -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" as="style">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap"></noscript>
 
@@ -58,7 +55,13 @@
         <header class="hero" id="inicio">
         <div class="hero-video-wrapper" id="heroVideoWrapper">
             <div class="hero-video-overlay"></div>
-            <!-- Video: carga directa con preload=none para no bloquear el LCP -->
+            <!-- Imagen LCP para móvil (visible solo en mobile, preloaded arriba) -->
+            <img src="logo-matilde.webp"
+                 alt="Matilde Agency - Marketing con visión en salud"
+                 class="hero-mobile-poster"
+                 fetchpriority="high"
+                 width="800" height="600">
+            <!-- Video solo en desktop (preload=none = no bloquea) -->
             <video muted loop playsinline class="hero-video" id="heroVideo"
                 poster="logo-matilde.webp"
                 preload="none">
