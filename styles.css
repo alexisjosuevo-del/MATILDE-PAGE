@@ -29,7 +29,7 @@
     --bg-main: #F5F5F7;      /* Blanco Humo / Gris muy claro */
     --bg-alt: #E8E8EB;       /* Gris sutil para contraste de bloques */
     --text-primary: #1A1C20; /* Gris Oscuro / Casi Negro para contraste brutal */
-    --text-secondary: #5A5F68; /* Gris medio para lectura secundaria */
+    --text-secondary: #444444; /* Gris más oscuro para asegurar contraste 100% */
     --accent-cyan: #2B8E9B;  /* Oscurecido para accesibilidad AA */
     --accent-hover: #FFEE46; /* Amarillo vibrante de Visme */
     
@@ -89,13 +89,11 @@ html {
 }
 
 body {
-    background-color: var(--bg-main);
+    background-color: #ffffff;
     color: var(--text-primary);
     font-family: var(--font-body);
     line-height: 1.5;
     overflow-x: hidden;
-    opacity: 0;
-    transition: opacity var(--transition-slow);
     cursor: none; 
 }
 

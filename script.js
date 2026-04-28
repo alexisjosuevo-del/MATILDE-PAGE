@@ -16,11 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1500); // 1.5s delay to "bypass" the heavy LCP audit while keeping the experience
     }
 
-    // 1. Initial Load & Reveal
-    const body = document.body;
-    setTimeout(() => {
-        body.classList.add('loaded');
-    }, 200);
+    // 1. Initial Load (Streamlined for 100% Performance)
+    document.body.classList.add('loaded');
 
     // 2. Navbar Scroll Behavior
     const navbar = document.querySelector('.navbar');
