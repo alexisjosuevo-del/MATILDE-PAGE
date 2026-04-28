@@ -1889,7 +1889,7 @@ img {
     text-transform: uppercase;
     font-weight: 700;
     margin-bottom: 0.5rem;
-    opacity: 0.9;
+    color: #ffffff; /* Blanco para contraste total */
 }
 
 .team-center-logo {
