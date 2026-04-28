@@ -1512,7 +1512,10 @@ img {
     }
 
     .brand-logo-container img {
-        height: 120px;
+        height: 180px;
+    }
+    .navbar {
+        min-height: 200px;
     }
 
     .menu-toggle {

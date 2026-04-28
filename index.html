@@ -20,7 +20,7 @@
         @font-face{font-family:'Outfit';src:url('fonts/outfit-700.ttf') format('truetype');font-weight:700;font-display:swap}
         *{margin:0;padding:0;box-sizing:border-box}
         body{font-family:'Outfit','Inter',system-ui,-apple-system,sans-serif;background:#f5f5f7;color:#1a1a2e;overflow-x:hidden}
-        .navbar{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:1.2rem 0;transition:all .4s cubic-bezier(.4,0,.2,1);min-height:80px}
+        .navbar{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:1rem 0;transition:all .4s;min-height:180px;background:rgba(245,245,247,.95);backdrop-filter:blur(10px)}
         .container{max-width:1400px;margin:0 auto;padding:0 5%}
         .nav-container{display:flex;align-items:center;justify-content:space-between}
         .brand-logo-container{display:block;min-height:70px;min-width:200px}
@@ -38,7 +38,8 @@
             .hero-video{display:block}
             .nav-links{display:none}
             .menu-toggle{display:block}
-            .brand-logo-container img{height:120px}
+            .brand-logo-container img{height:180px;width:auto}
+            .navbar{min-height:200px}
             .bg-blobs{display:none}
         }
         @media(min-width:769px){.hero-mobile-poster{display:none}.menu-toggle{display:none}}
@@ -62,7 +63,7 @@
     <nav class="navbar">
         <div class="container nav-container">
             <a href="#inicio" class="brand-logo-container" aria-label="Volver al inicio">
-                <img src="logo-matilde.webp" alt="Matilde Logo" width="320" height="180" fetchpriority="high" decoding="async">
+                <img src="logo-matilde.webp" alt="Matilde Logo" width="320" height="180" fetchpriority="high" decoding="sync">
             </a>
             <ul class="nav-links">
                 <li><a href="#somos">Nosotros</a></li>
