@@ -135,25 +135,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // 5. Mobile Menu - Defer
-    const setupMobileMenu = () => {
-        const menuToggle = document.querySelector('.menu-toggle');
-        const navLinks = document.querySelector('.nav-links');
-        if (menuToggle && navLinks) {
-            menuToggle.addEventListener('click', () => {
-                const isActive = navLinks.classList.toggle('active');
-                menuToggle.classList.toggle('active');
-                menuToggle.setAttribute('aria-expanded', isActive);
+    // 5. Mobile Menu (Restore immediate response)
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', () => {
+            const isActive = navLinks.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+            menuToggle.setAttribute('aria-expanded', isActive);
+        });
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                menuToggle.classList.remove('active');
+                menuToggle.setAttribute('aria-expanded', 'false');
             });
-            navLinks.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    navLinks.classList.remove('active');
-                    menuToggle.classList.remove('active');
-                    menuToggle.setAttribute('aria-expanded', 'false');
-                });
-            });
-        }
-    };
+        });
+    }
 
     // 6. Capability List Hover Effect
     const capabilities = document.querySelectorAll('.cap-item');
@@ -169,7 +167,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // This eliminates TBT (Total Blocking Time)
     // =====================================================
     const runNonCritical = () => {
-        setupMobileMenu();
         setupCursor();
         setupObservers();
 
