@@ -45,10 +45,10 @@
             .hero-video{display:block}
             .nav-links{display:none}
             .menu-toggle{display:block}
-            .brand-logo-container img{height:140px;width:auto;display:block}
-            .navbar{min-height:160px;height:auto;padding:10px 0}
+            .brand-logo-container img{height:180px;width:auto;display:block}
+            .navbar{min-height:200px;height:auto;padding:10px 0}
             .menu-toggle{display:flex;z-index:1001;color:#1a1a2e;margin-top:0;margin-right:15px}
-            .hero-content h1{margin-top:140px;min-height:180px;font-size:3rem}
+            .hero-content h1{margin-top:200px;min-height:220px;font-size:3.5rem}
             .nav-container{padding:0 15px}
         }
         @media(min-width:769px){.hero-mobile-poster{display:none}.menu-toggle{display:none}}
@@ -97,9 +97,9 @@
                  fetchpriority="high"
                  width="800" height="600">
             <!-- Video solo en desktop (preload=none = no bloquea) -->
-            <video muted loop playsinline class="hero-video" id="heroVideo"
+            <video muted loop playsinline autoplay class="hero-video" id="heroVideo"
                 poster="logo-matilde.webp"
-                preload="none">
+                preload="auto">
                 <source src="hero-video.mp4" type="video/mp4">
                 <track kind="captions" srclang="es" label="Sin audio" default>
             </video>
