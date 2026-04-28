@@ -8,13 +8,22 @@
     <meta name="description"
         content="Estrategia de marketing e innovación en salud corporativa. Ayudamos a marcas, clínicas y farmacéuticas a crecer con tecnología y creatividad.">
     <link rel="canonical" href="https://matilde.agency/">
-    <!-- Rendimiento: Preconexiones y hints de carga -->
+
+    <!-- Preconexiones -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://api.groq.com">
-    <!-- Preload recursos críticos -->
+
+    <!-- Preload recursos críticos (LCP) -->
+    <link rel="preload" href="logo-matilde.webp" as="image" fetchpriority="high">
+    <link rel="preload" href="Nexa-Heavy.ttf" as="font" type="font/truetype" crossorigin>
+    <link rel="preload" href="Nexa-ExtraLight.ttf" as="font" type="font/truetype" crossorigin>
     <link rel="preload" href="LEMONMILK-Regular.otf" as="font" type="font/otf" crossorigin>
-    <link rel="preload" href="logo-matilde.webp" as="image">
+
+    <!-- Google Fonts: carga no bloqueante -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap"></noscript>
+
     <!-- CSS Principal -->
     <link rel="stylesheet" href="styles.css">
     <!-- Favicon -->
@@ -47,10 +56,13 @@
 
     <main>
         <header class="hero" id="inicio">
-        <div class="hero-video-wrapper">
+        <div class="hero-video-wrapper" id="heroVideoWrapper">
             <div class="hero-video-overlay"></div>
-            <video muted loop playsinline class="hero-video" id="heroVideo" poster="logo-matilde.webp" fetchpriority="high" style="aspect-ratio: 16/9;">
-                <source data-src="hero-video.mp4" type="video/mp4">
+            <!-- Video: carga directa con preload=none para no bloquear el LCP -->
+            <video muted loop playsinline class="hero-video" id="heroVideo"
+                poster="logo-matilde.webp"
+                preload="none">
+                <source src="hero-video.mp4" type="video/mp4">
                 <track kind="captions" srclang="es" label="Sin audio" default>
             </video>
         </div>

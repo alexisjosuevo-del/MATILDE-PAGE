@@ -1,47 +1,65 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 0. Performance: Immediate Video Load
+    // 0. Performance: Smart Video Loading
+    // On mobile: skip video entirely (CSS hides it, no bandwidth wasted)
+    // On desktop: load video after browser is idle (non-blocking)
     const heroVideo = document.getElementById('heroVideo');
-    if (heroVideo) {
-        const source = heroVideo.querySelector('source');
-        if (source && source.dataset.src) {
-            source.src = source.dataset.src;
+    const isMobile = window.innerWidth <= 768;
+
+    if (heroVideo && !isMobile) {
+        // Use requestIdleCallback to load video without blocking main thread
+        const loadVideo = () => {
             heroVideo.load();
-            heroVideo.play().catch(() => {
-                document.addEventListener('touchstart', () => heroVideo.play(), { once: true });
-            });
+            heroVideo.play().catch(() => {});
+        };
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(loadVideo, { timeout: 2000 });
+        } else {
+            setTimeout(loadVideo, 500);
         }
     }
 
     // 1. Initial Load (Streamlined for 100% Performance)
     document.body.classList.add('loaded');
 
-    // 2. Navbar Scroll Behavior
+    // 2. Navbar Scroll Behavior (throttled with RAF for 100% Performance)
     const navbar = document.querySelector('.navbar');
     let lastScrollY = window.scrollY;
+    let scrollTicking = false;
+    // Cache blobs once
+    const blobs = document.querySelectorAll('.blob');
+    const isMobileView = window.innerWidth <= 768;
 
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 100) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
+        if (!scrollTicking) {
+            window.requestAnimationFrame(() => {
+                const scrollY = window.scrollY;
 
-        // Parallax for Background Blobs
-        const blobs = document.querySelectorAll('.blob');
-        blobs.forEach((blob, index) => {
-            const speed = (index + 1) * 0.1;
-            const yOffset = window.scrollY * speed;
-            blob.style.transform = `translateY(${yOffset}px)`;
-        });
+                // Navbar state
+                if (scrollY > 100) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
 
-        // Optional: Hide navbar on scroll down, show on scroll up for editorial feel
-        if (window.scrollY > lastScrollY && window.scrollY > 300) {
-            navbar.style.transform = 'translateY(-100%)';
-        } else {
-            navbar.style.transform = 'translateY(0)';
+                // Blob parallax only on desktop (mobile has animation:none)
+                if (!isMobileView) {
+                    blobs.forEach((blob, index) => {
+                        blob.style.transform = `translateY(${scrollY * (index + 1) * 0.1}px)`;
+                    });
+                }
+
+                // Hide/show navbar on scroll direction
+                if (scrollY > lastScrollY && scrollY > 300) {
+                    navbar.style.transform = 'translateY(-100%)';
+                } else {
+                    navbar.style.transform = 'translateY(0)';
+                }
+                lastScrollY = scrollY;
+                scrollTicking = false;
+            });
+            scrollTicking = true;
         }
-        lastScrollY = window.scrollY;
-    });
+    }, { passive: true });
 
     // 3. Cinematic Intersection Observer (Reveal Text & Elements)
     const revealOptions = {
@@ -565,8 +583,7 @@ FLUJO:
             }
         };
 
-        window.addEventListener('scroll', handleProcessScroll);
-        // Initial call
+        window.addEventListener('scroll', handleProcessScroll, { passive: true });
         handleProcessScroll();
     }
 
@@ -608,14 +625,5 @@ FLUJO:
 
         window.addEventListener('scroll', handleMobileScroll, { passive: true });
         handleMobileScroll();
-
-        // 12. Force Video Play on Mobile (Bypass Strict Policies)
-        const forceVideo = () => {
-            if (heroVideo) heroVideo.play().catch(() => {});
-            document.removeEventListener('touchstart', forceVideo);
-            document.removeEventListener('scroll', forceVideo);
-        };
-        document.addEventListener('touchstart', forceVideo, { passive: true });
-        document.addEventListener('scroll', forceVideo, { passive: true });
     }
 });
