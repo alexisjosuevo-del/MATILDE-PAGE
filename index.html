@@ -21,9 +21,9 @@
         @font-face{font-family:'Outfit';src:url('fonts/outfit-700.ttf') format('truetype');font-weight:700;font-display:swap}
         *{margin:0;padding:0;box-sizing:border-box}
         body{font-family:'Outfit','Inter',system-ui,-apple-system,sans-serif;background:#f5f5f7;color:#1a1a2e;overflow-x:hidden}
-        .navbar{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:10px 0;height:400px;background:transparent;display:flex;align-items:center;backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px)}
-        .hero-content h1{min-height:360px;margin-top:400px;line-height:1.05}
-        #aiModalOverlay{display:none;align-items:center;justify-content:center}
+        .navbar{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:10px 0;height:auto;min-height:160px;background:transparent;display:flex;align-items:center;backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px)}
+        .hero-content h1{min-height:220px;margin-top:160px;line-height:1.05}
+        #aiModalOverlay{display:none;align-items:center;justify-content:center;z-index:2000}
         #aiModalOverlay.active{display:flex}
         .container{max-width:1400px;margin:0 auto;padding:0 5%}
         .nav-container{display:flex;align-items:center;justify-content:space-between;width:100%}
@@ -45,10 +45,11 @@
             .hero-video{display:block}
             .nav-links{display:none}
             .menu-toggle{display:block}
-            .brand-logo-container img{height:350px;width:auto;display:block}
-            .navbar{height:400px;padding:20px 0}
-            .menu-toggle{display:flex;z-index:1001;color:#1a1a2e;margin-top:0}
-            .hero-content h1{margin-top:400px;min-height:480px}
+            .brand-logo-container img{height:140px;width:auto;display:block}
+            .navbar{min-height:160px;height:auto;padding:10px 0}
+            .menu-toggle{display:flex;z-index:1001;color:#1a1a2e;margin-top:0;margin-right:15px}
+            .hero-content h1{margin-top:140px;min-height:180px;font-size:3rem}
+            .nav-container{padding:0 15px}
         }
         @media(min-width:769px){.hero-mobile-poster{display:none}.menu-toggle{display:none}}
         .reveal-up{opacity:0;transform:translateY(20px)}
