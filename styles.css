@@ -1082,12 +1082,21 @@ img {
 
     /* Estado activo al scroll en celular (se activa vía JS) */
     .process-card-item.is-active .p-card-content {
-        transform: scale(1.05);
-        box-shadow: 0 30px 60px rgba(0,0,0,0.12);
-        border-color: var(--accent-cyan);
+        transform: scale(1.04) translateY(-10px);
+        box-shadow: 0 40px 80px rgba(0,0,0,0.15);
+        border-width: 2px;
+        background: #ffffff;
     }
+
+    /* Brillos de color según selección */
+    .process-card-item:nth-child(1).is-active .p-card-content { border-color: #1A3044; box-shadow: 0 20px 60px rgba(26, 48, 68, 0.2); }
+    .process-card-item:nth-child(2).is-active .p-card-content { border-color: #2B8E9B; box-shadow: 0 20px 60px rgba(43, 142, 155, 0.2); }
+    .process-card-item:nth-child(3).is-active .p-card-content { border-color: #A4C639; box-shadow: 0 20px 60px rgba(164, 198, 57, 0.2); }
+    .process-card-item:nth-child(4).is-active .p-card-content { border-color: #FFD700; box-shadow: 0 20px 60px rgba(255, 215, 0, 0.2); }
+
     .process-card-item.is-active .p-icon {
-        transform: scale(1.2) rotate(5deg);
+        transform: scale(1.15) rotate(8deg);
+        color: var(--accent-cyan);
     }
 
     .p-bg-num {

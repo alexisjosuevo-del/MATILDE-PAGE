@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 0. Performance: Conditional Video Load (Save 6MB on Mobile)
+    // 0. Performance: Video Load (Enabled for mobile as requested)
     const heroVideo = document.getElementById('heroVideo');
-    if (heroVideo && window.innerWidth > 768) {
+    if (heroVideo) {
         const source = heroVideo.querySelector('source');
         if (source && source.dataset.src) {
             source.src = source.dataset.src;
@@ -240,7 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // MANTÉN TU CLAVE API SEGURA: En producción, no debes exponer tu clave en el HTML/JS que se envía al cliente.
     // Esto es un modelo conceptual para usar Groq (Llama 3).
-    const GROQ_API_KEY = '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'; 
+    const GROQ_API_KEY = ''; 
     const matildeRules = `Eres Matilde Montoya, la experta IA de la agencia Matilde Agency (marketing, estrategia e innovación en salud corporativa).
 Reglas de conducta:
 1. SOLO hablas de servicios de la agencia, planes, marketing médico y salud corporativa. Responde corto (1-2 párrafos) y súper empático.
@@ -568,22 +568,33 @@ FLUJO:
     // 11. Mobile Process Selection Effect (Premium Feel)
     if (window.innerWidth <= 768) {
         const mobileProcessCards = document.querySelectorAll('.process-card-item');
-        const mobileObserverOptions = {
-            root: null,
-            threshold: 0.7 // Trigger when 70% of the card is visible
-        };
+        
+        const handleMobileScroll = () => {
+            const centerY = window.innerHeight / 2;
+            let closestCard = null;
+            let minDistance = Infinity;
 
-        const mobileObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    mobileProcessCards.forEach(c => c.classList.remove('is-active'));
-                    entry.target.classList.add('is-active');
+            mobileProcessCards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const cardCenterY = rect.top + rect.height / 2;
+                const distance = Math.abs(centerY - cardCenterY);
+
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestCard = card;
                 }
             });
-        }, mobileObserverOptions);
 
-        mobileProcessCards.forEach(card => {
-            mobileObserver.observe(card);
-        });
+            mobileProcessCards.forEach(card => {
+                if (card === closestCard) {
+                    card.classList.add('is-active');
+                } else {
+                    card.classList.remove('is-active');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', handleMobileScroll);
+        handleMobileScroll(); // Initial check
     }
 });
