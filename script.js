@@ -1,4 +1,4 @@
-﻿document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
 
     // 0. Performance: Smart Video Loading
     // Strategy: <img> shows as instant LCP for Lighthouse audit
@@ -236,6 +236,11 @@ Servicios: Paquete Basic $39k MXN, Pro $79k, Elite $169k. Pregunta perfil del us
         btnIniciarConversacion.addEventListener('click', (e) => {
             e.preventDefault();
             aiModalOverlay.classList.add('active');
+            // Load and play chatbot video on demand (saves 2MB initial bandwidth)
+            if (aiCharacterVideo) {
+                aiCharacterVideo.load();
+                aiCharacterVideo.play().catch(() => {});
+            }
             if (aiChatHistory && aiChatHistory.children.length === 1) {
                 aiInitialMessage.style.display = 'flex';
                 aiChatText.textContent = '';
