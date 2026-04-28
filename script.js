@@ -455,12 +455,19 @@ Servicios: Paquete Basic $39k MXN, Pro $79k, Elite $169k. Pregunta perfil del us
         handleProcessScroll();
     }
 
-    // 11. Mobile Process Selection Effect (Throttled)
     if (window.innerWidth <= 768) {
-        const mobileProcessCards = document.querySelectorAll('.process-card-item');
+        const mobileProcessCards = Array.from(document.querySelectorAll('.process-card-item'));
+        const processSec = document.getElementById('proceso');
+        let isProcesoVisible = false;
+        
+        const procObs = new IntersectionObserver((entries) => {
+            isProcesoVisible = entries[0].isIntersecting;
+        }, { threshold: 0.01 });
+        if (processSec) procObs.observe(processSec);
+
         let ticking = false;
         const handleMobileScroll = () => {
-            if (!ticking) {
+            if (!ticking && isProcesoVisible) {
                 window.requestAnimationFrame(() => {
                     const centerY = window.innerHeight / 2;
                     let closestCard = null, minDistance = Infinity;
@@ -478,7 +485,6 @@ Servicios: Paquete Basic $39k MXN, Pro $79k, Elite $169k. Pregunta perfil del us
             }
         };
         window.addEventListener('scroll', handleMobileScroll, { passive: true });
-        handleMobileScroll();
     }
 
 });

@@ -2,14 +2,13 @@
 <html lang="es">
 
 <head>
+    <link rel="preload" href="logo-matilde.webp" as="image" fetchpriority="high">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matilde Montoya | Estrategia de Marketing e Innovación en Salud</title>
     <meta name="description" content="Estrategia de marketing e innovación en salud corporativa. Ayudamos a marcas, clínicas y farmacéuticas a crecer con tecnología y creatividad.">
     <link rel="canonical" href="https://matilde.agency/">
 
-    <!-- Preload Recurso LCP Crítico -->
-    <link rel="preload" href="logo-matilde.webp" as="image" fetchpriority="high">
 
     <!-- Preconexiones -->
     <link rel="preconnect" href="https://api.groq.com" crossorigin>
@@ -21,6 +20,7 @@
         *{margin:0;padding:0;box-sizing:border-box}
         body{font-family:'Outfit','Inter',system-ui,-apple-system,sans-serif;background:#f5f5f7;color:#1a1a2e;overflow-x:hidden}
         .navbar{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:1rem 0;transition:all .4s;min-height:220px;background:transparent}
+        .hero-content h1{min-height:220px}
         .container{max-width:1400px;margin:0 auto;padding:0 5%}
         .nav-container{display:flex;align-items:center;justify-content:space-between}
         .brand-logo-container{display:block;min-height:70px;min-width:200px}
@@ -63,7 +63,7 @@
     <nav class="navbar">
         <div class="container nav-container">
             <a href="#inicio" class="brand-logo-container" aria-label="Volver al inicio">
-                <img src="logo-matilde.webp" alt="Matilde Logo" width="320" height="180" fetchpriority="high" decoding="sync">
+                <img src="logo-matilde.webp" alt="Matilde Logo" width="254" height="180" fetchpriority="high" decoding="sync">
             </a>
             <ul class="nav-links">
                 <li><a href="#somos">Nosotros</a></li>
