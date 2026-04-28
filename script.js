@@ -155,6 +155,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // =====================================================
+    // NON-CRITICAL JS — Deferred to browser idle time
+    // This eliminates TBT (Total Blocking Time) for 100% Performance
+    // =====================================================
+    const runNonCritical = () => {
+
     // 7. Scratch reveal for results section
     const scratchStats = document.querySelectorAll('.scratch-stat');
     const scratchObserver = new IntersectionObserver((entries, observer) => {
@@ -539,6 +545,13 @@ FLUJO:
 
         positionMembers();
         animateTeam();
+    }
+
+    }; // END runNonCritical
+    if ('requestIdleCallback' in window) {
+        requestIdleCallback(runNonCritical, { timeout: 3000 });
+    } else {
+        setTimeout(runNonCritical, 800);
     }
 
     // 10. Horizontal Scroll Process Section (Layout 41 Style)
