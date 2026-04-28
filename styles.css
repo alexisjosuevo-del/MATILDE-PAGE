@@ -107,7 +107,6 @@
     filter: blur(100px);
     border-radius: 50%;
     animation: blobFloat 25s infinite alternate ease-in-out;
-    will-change: transform;
 }
 
 .blob-1 { top: -15%; right: -15%; background: radial-gradient(circle, rgba(50, 163, 179, 0.25) 0%, transparent 70%); }
@@ -144,10 +143,14 @@
     .hero-video-wrapper {
         background: none;
     }
-    /* Sin blur en móvil - muy caro en GPU */
+    /* Sin blur ni animación en móvil - muy caro en GPU */
     .blob {
         filter: none !important;
-        opacity: 0.3;
+        animation: none !important;
+        opacity: 0.15;
+    }
+    .bg-blobs {
+        display: none;
     }
 }
 
@@ -161,7 +164,6 @@
 }
 
 html {
-    scroll-behavior: smooth;
     font-size: 16px;
 }
 
@@ -198,7 +200,6 @@ h2, h3, h4 {
     transform: translateY(60px);
     opacity: 0;
     transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.2s ease;
-    will-change: transform, opacity;
 }
 
 .reveal-up.revealed {
@@ -297,8 +298,7 @@ img {
 
 .navbar.scrolled {
     padding: 1.5rem 0;
-    background: rgba(245, 245, 247, 0.96); /* Blanco humo semi-transparente */
-    backdrop-filter: blur(10px);
+    background: rgba(245, 245, 247, 0.97);
     border-bottom: 1px solid var(--border-color);
 }
 
@@ -310,13 +310,11 @@ img {
 
 /* LOGO: Se eliminan todos los filtros de color */
 .brand-logo-container img {
-    height: 220px;
-    width: auto;
+    height: 70px;
+    width: 220px;
     object-fit: contain;
     background: transparent;
-    box-shadow: none;
     border: 0;
-    mix-blend-mode: normal;
     transition: transform 0.3s ease;
 }
 
@@ -857,8 +855,7 @@ img {
     z-index: 2;
     pointer-events: none;
 }
-    to { transform: translateX(-33.333%); }
-}
+
 
 /* =========================================
    CLIENTES (LOGOS GRID)
@@ -879,7 +876,6 @@ img {
     display: flex;
     width: max-content;
     animation: clientsCarousel 28s linear infinite;
-    will-change: transform;
 }
 
 .clients-carousel:hover .clients-track {
@@ -947,7 +943,6 @@ img {
     display: flex;
     padding-left: 10vw;
     padding-right: 20vw;
-    will-change: transform;
     gap: 15vw;
 }
 
@@ -1448,13 +1443,7 @@ img {
     }
 }
 
-/* Parche aplicado: tipografía NexaExtraLight en sección 02 */
-@font-face {
-    font-family: 'LemonMilk';
-    src: url('LEMONMILK-Regular.otf') format('opentype');
-    font-weight: 400;
-    font-style: normal;
-}
+/* NexaExtraLight en sección 02 */
 
 #capacidades .cap-title {
     font-family: 'NexaExtraLight', sans-serif;
@@ -1532,16 +1521,13 @@ img {
         width: 58px;
         height: 58px;
         border-radius: 20px;
-        background: rgba(245, 245, 247, 0.24);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.30);
-        box-shadow: 0 14px 34px rgba(26, 28, 32, 0.14);
+        background: rgba(245, 245, 247, 0.92);
+        border: 1px solid rgba(200, 200, 200, 0.30);
+        box-shadow: 0 4px 12px rgba(26, 28, 32, 0.1);
         position: relative;
         z-index: 141;
         cursor: pointer;
         touch-action: manipulation;
-        transition: transform 0.28s ease, background 0.28s ease, border-color 0.28s ease;
     }
 
     .menu-toggle:hover,
@@ -1555,9 +1541,7 @@ img {
         content: '';
         position: fixed;
         inset: 0;
-        background: rgba(16, 22, 28, 0.24);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
+        background: rgba(16, 22, 28, 0.45);
         opacity: 0;
         visibility: hidden;
         transition: opacity 0.28s ease, visibility 0.28s ease;
@@ -1583,12 +1567,10 @@ img {
         max-width: 420px;
         margin: 0;
         padding: 1rem;
-        background: linear-gradient(180deg, rgba(245,245,247,0.96) 0%, rgba(232,232,235,0.95) 100%);
-        backdrop-filter: blur(22px);
-        -webkit-backdrop-filter: blur(22px);
-        border: 1px solid rgba(255,255,255,0.45);
+        background: rgba(245,245,247,0.98);
+        border: 1px solid rgba(200,200,200,0.45);
         border-radius: 28px;
-        box-shadow: 0 26px 60px rgba(26, 28, 32, 0.18);
+        box-shadow: 0 12px 30px rgba(26, 28, 32, 0.15);
         opacity: 0;
         visibility: hidden;
         pointer-events: none;
@@ -1648,9 +1630,7 @@ img {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(26, 28, 32, 0.85);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: rgba(26, 28, 32, 0.9);
     z-index: 9999;
     display: flex;
     justify-content: center;
@@ -1975,7 +1955,6 @@ img {
 .team-member {
     position: absolute;
     /* El tamaño y posición se setean por JavaScript */
-    will-change: transform;
     z-index: 2;
     transition: transform 0.3s ease;
 }

@@ -9,7 +9,7 @@
     <link rel="canonical" href="https://matilde.agency/">
 
     <!-- Preconexiones -->
-    <link rel="dns-prefetch" href="https://api.groq.com">
+    <link rel="preconnect" href="https://api.groq.com" crossorigin>
 
     <!-- Preload Recurso LCP Crítico -->
     <link rel="preload" href="logo-matilde.webp" as="image" fetchpriority="high">
@@ -23,7 +23,7 @@
         .navbar{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:1.2rem 0;transition:all .4s cubic-bezier(.4,0,.2,1)}
         .container{max-width:1400px;margin:0 auto;padding:0 5%}
         .nav-container{display:flex;align-items:center;justify-content:space-between}
-        .brand-logo-container img{width:220px;height:auto}
+        .brand-logo-container img{width:220px;height:70px;object-fit:contain}
         .hero{min-height:100vh;display:flex;align-items:flex-end;padding-bottom:8vw;position:relative;background:#f5f5f7;overflow:hidden}
         .hero-video-wrapper{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;overflow:hidden}
         .hero-video{width:100%;height:100%;object-fit:cover;object-position:center}
@@ -37,6 +37,7 @@
             .hero-video{display:block}
             .nav-links{display:none}
             .menu-toggle{display:block}
+            .bg-blobs{display:none}
         }
         @media(min-width:769px){.hero-mobile-poster{display:none}.menu-toggle{display:none}}
         .reveal-up{opacity:0;transform:translateY(40px);transition:opacity .8s,transform .8s}
@@ -47,7 +48,7 @@
     <link rel="stylesheet" href="styles.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="styles.css"></noscript>
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="icon" type="image/webp" href="logo.webp">
 </head>
 
 <body>
@@ -166,8 +167,8 @@
                 <a href="#" class="work-item hover-target">
                     <div class="work-img-wrapper bg-1">
                         <div class="work-overlay"></div>
-                        <video class="work-media" autoplay muted loop playsinline>
-                            <source src="clientes-aliados-video.mp4" type="video/mp4">
+                        <video class="work-media" muted loop playsinline preload="none" data-lazy-video="true">
+                            <source data-src="clientes-aliados-video.mp4" type="video/mp4">
                         </video>
                     </div>
                     <div class="work-info">
@@ -304,7 +305,7 @@
                         <!-- Conclusion Card -->
                         <div class="process-card-item conclusion-card">
                             <div class="p-card-content">
-                                <img src="logo.webp" alt="Matilde Logo" class="p-logo-img">
+                                <img src="logo.webp" alt="Matilde Logo" class="p-logo-img" loading="lazy" width="60" height="60" decoding="async">
                                 <p class="p-conclusion-text">
                                     En Matilde, combinamos <strong>creatividad</strong>, <strong>estrategia</strong> y
                                     <strong>tecnología</strong> para convertir marketing en crecimiento sostenible y
@@ -334,13 +335,13 @@
             <div class="team-scene" id="teamScene">
                 <div class="team-center">
                     <small>Equipo</small>
-                    <img src="Logo matilde Blan.png" alt="Matilde Logo" class="team-center-logo">
+                    <img src="Logo_matilde_Blan.webp" alt="Matilde Logo" class="team-center-logo" loading="lazy" width="200" height="80" decoding="async">
                 </div>
 
                 <!-- Miembros del Equipo -->
                 <div class="team-member">
                     <div class="member-card">
-                        <img src="avatares_caricatura/Mariel_avatar.webp" alt="Mariel" loading="lazy">
+                        <img src="avatares_caricatura/Mariel_avatar.webp" alt="Mariel" loading="lazy" width="160" height="160" decoding="async">
                         <div class="member-info">
                             <strong>Mariel</strong>
                             <span>Experta estrategia de contenido, analítica de datos, desarrollo digital</span>
@@ -350,7 +351,7 @@
 
                 <div class="team-member">
                     <div class="member-card">
-                        <img src="avatares_caricatura/Monse_avatar.webp" alt="Monse" loading="lazy">
+                        <img src="avatares_caricatura/Monse_avatar.webp" alt="Monse" loading="lazy" width="160" height="160" decoding="async">
                         <div class="member-info">
                             <strong>Monse</strong>
                             <span>Experta en programación web, desarrollo de contenido</span>
@@ -360,7 +361,7 @@
 
                 <div class="team-member">
                     <div class="member-card">
-                        <img src="avatares_caricatura/Maf_avatar.webp" alt="Maf" loading="lazy">
+                        <img src="avatares_caricatura/Maf_avatar.webp" alt="Maf" loading="lazy" width="160" height="160" decoding="async">
                         <div class="member-info">
                             <strong>Maf</strong>
                             <span>Experta en la industria farma y lenguaje médico</span>
@@ -370,7 +371,7 @@
 
                 <div class="team-member">
                     <div class="member-card">
-                        <img src="avatares_caricatura/Tono_avatar.webp" alt="Toño" loading="lazy">
+                        <img src="avatares_caricatura/Tono_avatar.webp" alt="Toño" loading="lazy" width="160" height="160" decoding="async">
                         <div class="member-info">
                             <strong>Toño</strong>
                             <span>Experto estrategia comercial, analítica de datos, investigación de mercado</span>
@@ -380,7 +381,7 @@
 
                 <div class="team-member">
                     <div class="member-card">
-                        <img src="avatares_caricatura/Jose_Luis_avatar.webp" alt="José Luis" loading="lazy">
+                        <img src="avatares_caricatura/Jose_Luis_avatar.webp" alt="José Luis" loading="lazy" width="160" height="160" decoding="async">
                         <div class="member-info">
                             <strong>José Luis</strong>
                             <span>Experto en branding y posicionamiento de marca</span>
@@ -390,7 +391,7 @@
 
                 <div class="team-member">
                     <div class="member-card">
-                        <img src="avatares_caricatura/Sckar_avatar.webp" alt="Sckar" loading="lazy">
+                        <img src="avatares_caricatura/Sckar_avatar.webp" alt="Sckar" loading="lazy" width="160" height="160" decoding="async">
                         <div class="member-info">
                             <strong>Sckar</strong>
                             <span>Profesional de Meta, Google y pauta digital</span>
@@ -400,7 +401,7 @@
 
                 <div class="team-member">
                     <div class="member-card">
-                        <img src="avatares_caricatura/Alex_avatar.webp" alt="Alx" loading="lazy">
+                        <img src="avatares_caricatura/Alex_avatar.webp" alt="Alx" loading="lazy" width="160" height="160" decoding="async">
                         <div class="member-info">
                             <strong>Alx</strong>
                             <span>Experto en desarrollo tecnológico</span>
@@ -449,7 +450,7 @@
             <div class="footer-top">
                 <div class="f-brand">
                     <a href="#inicio" class="brand-logo-container">
-                        <img src="logo-matilde.webp" alt="Matilde Logo">
+                        <img src="logo-matilde.webp" alt="Matilde Logo" width="220" height="70" loading="lazy">
                     </a>
                     <p>Matilde® 2026. Estrategia de marketing e innovación para marcas y proyectos del sector salud.</p>
                 </div>
@@ -489,9 +490,10 @@
             <button class="ai-modal-close" id="aiModalClose" aria-label="Cerrar chat">&times;</button>
             <div class="ai-content-wrapper">
                 <div class="ai-character-container">
-                    <video id="aiCharacterVideo" muted loop playsinline preload="none" class="ai-character-media"
-                        aria-label="Asistente virtual Matilde">
+                    <video id="aiCharacterVideo" muted loop playsinline preload="auto" class="ai-character-media"
+                        aria-label="Asistente virtual Matilde" poster="PERSONAJE IA.webp">
                         <source src="Video_Cómico_de_Matilde.mp4" type="video/mp4">
+                        <track kind="captions" srclang="es" label="Sin audio" default>
                     </video>
                 </div>
                 <div class="ai-chat-history" id="aiChatHistory" aria-live="polite">

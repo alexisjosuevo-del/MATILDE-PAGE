@@ -8,19 +8,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (heroVideo) {
         const loadAndPlayVideo = () => {
+            heroVideo.setAttribute('autoplay', '');
             heroVideo.load();
-            heroVideo.play().catch(() => {
-                document.addEventListener('touchstart', () => heroVideo.play(), { once: true });
-            });
+            const playPromise = heroVideo.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(() => {
+                    // On mobile, autoplay may be blocked - wait for user gesture
+                    const startOnTouch = () => {
+                        heroVideo.play().catch(() => {});
+                        document.removeEventListener('touchstart', startOnTouch);
+                        document.removeEventListener('scroll', startOnTouch);
+                    };
+                    document.addEventListener('touchstart', startOnTouch, { once: true, passive: true });
+                    document.addEventListener('scroll', startOnTouch, { once: true, passive: true });
+                });
+            }
             heroVideo.addEventListener('playing', () => {
                 if (heroPoster) heroPoster.classList.add('video-ready');
             }, { once: true });
         };
-        if ('requestIdleCallback' in window) {
-            requestIdleCallback(loadAndPlayVideo, { timeout: 2500 });
-        } else {
-            setTimeout(loadAndPlayVideo, 1000);
-        }
+        // Faster load for mobile videos
+        setTimeout(loadAndPlayVideo, 800);
     }
 
     // 1. Initial Load
@@ -30,7 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const navbar = document.querySelector('.navbar');
     let lastScrollY = window.scrollY;
     let scrollTicking = false;
-    const blobs = document.querySelectorAll('.blob');
     const isMobileView = window.innerWidth <= 768;
 
     window.addEventListener('scroll', () => {
@@ -42,11 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     navbar.classList.remove('scrolled');
                 }
-                if (!isMobileView) {
-                    blobs.forEach((blob, index) => {
-                        blob.style.transform = `translateY(${scrollY * (index + 1) * 0.1}px)`;
-                    });
-                }
+                // Blob parallax removed — CSS animation handles it, no JS style mutation needed
                 if (scrollY > lastScrollY && scrollY > 300) {
                     navbar.style.transform = 'translateY(-100%)';
                 } else {
@@ -71,6 +74,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }, revealOptions);
     document.querySelectorAll('.reveal-up, .reveal-fade, .reveal-stagger > *').forEach(el => {
         revealObserver.observe(el);
+    });
+
+    // 3b. Lazy Video Loading (saves ~5.4MB initial bandwidth)
+    const lazyVideoObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const video = entry.target;
+                const sources = video.querySelectorAll('source[data-src]');
+                sources.forEach(source => {
+                    source.src = source.dataset.src;
+                    source.removeAttribute('data-src');
+                });
+                video.load();
+                video.play().catch(() => {});
+                observer.unobserve(video);
+            }
+        });
+    }, { rootMargin: '200px 0px', threshold: 0.01 });
+    document.querySelectorAll('[data-lazy-video]').forEach(video => {
+        lazyVideoObserver.observe(video);
     });
 
     // 4. Custom Cursor (Desktop Only)
@@ -227,10 +250,8 @@ Servicios: Paquete Basic $39k MXN, Pro $79k, Elite $169k. Pregunta perfil del us
 
     let chatSessionHistory = [{ role: "system", content: matildeRules }];
 
-    if (aiUserInput && aiCharacterVideo) {
-        aiUserInput.addEventListener('focus', () => { aiCharacterVideo.src = "matilde-eyelashes.webp"; });
-        aiUserInput.addEventListener('blur', () => { aiCharacterVideo.src = "PERSONAJE IA.webp"; });
-    }
+    // Video stays as video - no longer overwrite src with images
+    // The chatbot video (Video_Cómico_de_Matilde.mp4) plays continuously in the modal
 
     if (btnIniciarConversacion && aiModalOverlay) {
         btnIniciarConversacion.addEventListener('click', (e) => {
@@ -239,7 +260,15 @@ Servicios: Paquete Basic $39k MXN, Pro $79k, Elite $169k. Pregunta perfil del us
             // Load and play chatbot video on demand (saves 2MB initial bandwidth)
             if (aiCharacterVideo) {
                 aiCharacterVideo.load();
-                aiCharacterVideo.play().catch(() => {});
+                const vp = aiCharacterVideo.play();
+                if (vp !== undefined) {
+                    vp.catch(() => {
+                        // Mobile: wait for touch to play video
+                        document.addEventListener('touchstart', () => {
+                            aiCharacterVideo.play().catch(() => {});
+                        }, { once: true, passive: true });
+                    });
+                }
             }
             if (aiChatHistory && aiChatHistory.children.length === 1) {
                 aiInitialMessage.style.display = 'flex';
@@ -319,16 +348,23 @@ Servicios: Paquete Basic $39k MXN, Pro $79k, Elite $169k. Pregunta perfil del us
     if (aiModalClose) aiModalClose.addEventListener('click', () => { aiModalOverlay.classList.remove('active'); });
     if (aiModalOverlay) aiModalOverlay.addEventListener('click', (e) => { if (e.target === aiModalOverlay) aiModalOverlay.classList.remove('active'); });
 
-    // 9. Team Rotation Logic
+    // 9. Team Rotation Logic (Optimized: only runs when visible)
     const teamScene = document.getElementById("teamScene");
     if (teamScene) {
         const members = Array.from(teamScene.querySelectorAll(".team-member"));
-        let angle = 0, paused = false;
+        let angle = 0, paused = false, isVisible = false;
         const speed = 0.0003;
+        
         members.forEach(m => {
             m.addEventListener("mouseenter", () => paused = true);
             m.addEventListener("mouseleave", () => paused = false);
         });
+
+        const observer = new IntersectionObserver((entries) => {
+            isVisible = entries[0].isIntersecting;
+        }, { threshold: 0.1 });
+        observer.observe(teamScene);
+
         function positionMembers() {
             const containerW = teamScene.clientWidth;
             const containerH = teamScene.clientHeight;
@@ -338,15 +374,20 @@ Servicios: Paquete Basic $39k MXN, Pro $79k, Elite $169k. Pregunta perfil del us
             members.forEach((m, i) => {
                 m.style.width = `${itemSize}px`;
                 m.style.height = `${itemSize}px`;
-                m.style.left = '0';
-                m.style.top = '0';
                 const a = angle + (i * (Math.PI * 2 / members.length));
                 const x = cx + Math.cos(a - Math.PI / 2) * radius - itemSize / 2;
                 const y = cy + Math.sin(a - Math.PI / 2) * radius - itemSize / 2;
                 m.style.transform = `translate3d(${Math.round(x)}px, ${Math.round(y)}px, 0)`;
             });
         }
-        function animateTeam() { if (!paused) angle += speed; positionMembers(); requestAnimationFrame(animateTeam); }
+        
+        function animateTeam() { 
+            if (!paused && isVisible) { 
+                angle += speed; 
+                positionMembers(); 
+            }
+            requestAnimationFrame(animateTeam); 
+        }
         positionMembers();
         animateTeam();
     }
@@ -358,12 +399,19 @@ Servicios: Paquete Basic $39k MXN, Pro $79k, Elite $169k. Pregunta perfil del us
         setTimeout(runNonCritical, 800);
     }
 
-    // 10. Horizontal Scroll Process Section (Desktop Only)
+    // 10. Horizontal Scroll Process Section (Optimized: only runs when visible)
     const processHorizontal = document.getElementById('processHorizontal');
     const processTrack = document.getElementById('processTrack');
     const progressBar = document.querySelector('.process-progress-bar');
     if (processHorizontal && processTrack && window.innerWidth > 768) {
+        let processIsVisible = false;
+        const processObs = new IntersectionObserver((entries) => {
+            processIsVisible = entries[0].isIntersecting;
+        }, { threshold: 0.01 });
+        processObs.observe(processHorizontal);
+
         const handleProcessScroll = () => {
+            if (!processIsVisible) return;
             const containerRect = processHorizontal.getBoundingClientRect();
             const containerTop = containerRect.top + window.scrollY;
             const containerHeight = processHorizontal.offsetHeight;
@@ -373,9 +421,9 @@ Servicios: Paquete Basic $39k MXN, Pro $79k, Elite $169k. Pregunta perfil del us
             const trackWidth = processTrack.scrollWidth;
             const windowWidth = window.innerWidth;
             const maxTranslate = trackWidth - windowWidth + (windowWidth * 0.1);
-            processTrack.style.transform = `translateX(${-progress * maxTranslate}px)`;
+            processTrack.style.transform = `translate3d(${-progress * maxTranslate}px, 0, 0)`;
             const bgNums = processTrack.querySelectorAll('.p-bg-num');
-            bgNums.forEach((num, index) => { num.style.transform = `translateX(${progress * 150 * (0.1 + index * 0.05)}px)`; });
+            bgNums.forEach((num, index) => { num.style.transform = `translate3d(${progress * 150 * (0.1 + index * 0.05)}px, 0, 0)`; });
             if (progressBar) progressBar.style.width = `${progress * 80}vw`;
         };
         window.addEventListener('scroll', handleProcessScroll, { passive: true });
