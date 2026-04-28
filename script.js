@@ -12,20 +12,18 @@ document.addEventListener('DOMContentLoaded', () => {
             heroVideo.load();
             const playPromise = heroVideo.play();
             if (playPromise !== undefined) {
-                playPromise.catch(() => {
-                    // On mobile, autoplay may be blocked - wait for user gesture
+                playPromise.then(() => {
+                    if (heroPoster) heroPoster.classList.add('video-ready');
+                }).catch(() => {
                     const startOnTouch = () => {
-                        heroVideo.play().catch(() => {});
-                        document.removeEventListener('touchstart', startOnTouch);
-                        document.removeEventListener('scroll', startOnTouch);
+                        heroVideo.play().then(() => {
+                            if (heroPoster) heroPoster.classList.add('video-ready');
+                        }).catch(() => {});
                     };
                     document.addEventListener('touchstart', startOnTouch, { once: true, passive: true });
                     document.addEventListener('scroll', startOnTouch, { once: true, passive: true });
                 });
             }
-            heroVideo.addEventListener('playing', () => {
-                if (heroPoster) heroPoster.classList.add('video-ready');
-            }, { once: true });
         };
         // Faster load for mobile videos
         setTimeout(loadAndPlayVideo, 400); 
@@ -188,15 +186,13 @@ Servicios: Paquete Basic $39k MXN, Pro $79k, Elite $169k. Pregunta perfil del us
             e.preventDefault();
             aiModalOverlay.classList.add('active');
             if (aiCharacterVideo) {
-                aiCharacterVideo.load();
-                const vp = aiCharacterVideo.play();
-                if (vp !== undefined) {
-                    vp.catch(() => {
-                        document.addEventListener('touchstart', () => {
-                            aiCharacterVideo.play().catch(() => {});
-                        }, { once: true, passive: true });
-                    });
-                }
+                aiCharacterVideo.muted = true;
+                aiCharacterVideo.loop = true;
+                aiCharacterVideo.play().catch(() => {
+                    document.addEventListener('touchstart', () => {
+                        aiCharacterVideo.play().catch(() => {});
+                    }, { once: true, passive: true });
+                });
             }
             if (aiChatHistory && aiChatHistory.children.length === 1) {
                 aiInitialMessage.style.display = 'flex';
