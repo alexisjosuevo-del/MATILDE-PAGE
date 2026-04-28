@@ -25,13 +25,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         };
-        // Faster load for mobile videos
-        setTimeout(loadAndPlayVideo, 400); 
-        
-        // Force play on first touch if blocked
-        document.body.addEventListener('touchstart', () => {
-            if (heroVideo.paused) heroVideo.play().catch(() => {});
-        }, { once: true });
+        // Force play on first touch, scroll or click if blocked (Crucial for mobile)
+        const forceHeroPlay = () => {
+            if (heroVideo && heroVideo.paused) {
+                heroVideo.play().then(() => {
+                    if (heroPoster) heroPoster.classList.add('video-ready');
+                }).catch(() => {});
+            }
+        };
+        document.addEventListener('touchstart', forceHeroPlay, { once: true, passive: true });
+        document.addEventListener('scroll', forceHeroPlay, { once: true, passive: true });
+        document.addEventListener('click', forceHeroPlay, { once: true });
     }
 
     // 1. Initial Load
