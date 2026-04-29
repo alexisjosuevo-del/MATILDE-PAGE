@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const aiSendBtn = document.getElementById('aiSendBtn');
 
     const GROQ_API_KEY = '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';
-    const matildeRules = `Eres Matilde Montoya, la experta IA de la agencia Matilde Agency.
+    const matildeRules = `Eres Matilde 360, la experta IA de la agencia Matilde Agency.
 Reglas: SOLO hablas de servicios de la agencia. Responde corto (1-2 parrafos).
 Servicios: Paquete Basic $39k MXN, Pro $79k, Elite $169k. Pregunta perfil del usuario (Medico, Clinica, Farmaceutica, Startup).`;
 
@@ -212,7 +212,7 @@ Servicios: Paquete Basic $39k MXN, Pro $79k, Elite $169k. Pregunta perfil del us
                 setTimeout(() => {
                     aiTypingIndicator.style.display = 'none';
                     aiChatText.style.display = 'block';
-                    const message = "Hola soy Matilde Montoya, en que te puedo ayudar?";
+                    const message = "Hola soy Matilde 360, en que te puedo ayudar?";
                     let i = 0;
                     function typeWriter() {
                         if (i < message.length) { aiChatText.textContent += message.charAt(i); i++; setTimeout(typeWriter, 35); }
