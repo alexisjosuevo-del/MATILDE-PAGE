@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const aiUserInput = document.getElementById('aiUserInput');
     const aiSendBtn = document.getElementById('aiSendBtn');
 
-    const GROQ_API_KEY = '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';
+    const GROQ_API_KEY = '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';
     const matildeRules = `Eres Matilde 360, la experta IA de la agencia Matilde Agency.
 Reglas: SOLO hablas de servicios de la agencia. Responde corto (1-2 parrafos).
 Servicios: Paquete Basic $39k MXN, Pro $79k, Elite $169k. Pregunta perfil del usuario (Medico, Clinica, Farmaceutica, Startup).`;
