@@ -184,7 +184,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const aiUserInput = document.getElementById('aiUserInput');
     const aiSendBtn = document.getElementById('aiSendBtn');
 
-    const GROQ_API_KEY = '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';
     const matildeRules = `Eres Matilde 360, la experta IA de la agencia Matilde Agency.
 Reglas: SOLO hablas de servicios de la agencia. Responde corto (1-2 parrafos).
 Servicios: Paquete Basic $39k MXN, Pro $79k, Elite $169k. Pregunta perfil del usuario (Medico, Clinica, Farmaceutica, Startup).`;
@@ -234,10 +233,10 @@ Servicios: Paquete Basic $39k MXN, Pro $79k, Elite $169k. Pregunta perfil del us
         chatSessionHistory.push({ role: "user", content: text });
         const typingBubble = appendTypingIndicator();
         try {
-            const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+            const response = await fetch('/api/chat', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_API_KEY}` },
-                body: JSON.stringify({ model: 'llama-3.1-8b-instant', messages: chatSessionHistory })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ messages: chatSessionHistory })
             });
             const data = await response.json();
             if (!response.ok) throw new Error(data.error?.message || 'Error API');
