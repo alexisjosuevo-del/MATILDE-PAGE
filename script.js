@@ -233,7 +233,8 @@ Servicios: Paquete Basic $39k MXN, Pro $79k, Elite $169k. Pregunta perfil del us
         chatSessionHistory.push({ role: "user", content: text });
         const typingBubble = appendTypingIndicator();
         try {
-            const response = await fetch('/api/chat', {
+            // Apuntar directamente a Vercel usando CORS
+            const response = await fetch('https://matilde-page.vercel.app/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ messages: chatSessionHistory })
